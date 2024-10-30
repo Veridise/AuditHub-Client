@@ -1,0 +1,34 @@
+[tool.poetry]
+name = "audithub-client"
+version = "1.0.0"
+description = "A Python client that can access Veridise AuditHub via its REST API, providing CLI access"
+authors = ["Nikos Chondros <nikos@veridise.com>"]
+license = "AGPLv3"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+requests = "*"
+websockets = "*"
+tabulate = "*"
+cyclopts = "^2.9.9"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+black = "*"
+isort = "*"
+ruff = "*"
+mypy = "*"
+types-tabulate = "*"
+
+[tool.isort]
+profile = "black"
+src_paths = ["audithub_client"]
+
+
+[tool.poetry.scripts]
+ah = "audithub_client.__main__:main"
