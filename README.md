@@ -88,7 +88,7 @@ If the above exits with a 0 exit code, then all steps completed successfully and
 # Obtaining the logs
 
 Additionally, if you want to download the output of the tool, or any step of the task execution, you can invoke:
-`ah get-task-logs --task-id $task_id --step-code picus`
+`ah get-task-logs --task-id $task_id --step-code run-picus`
 
 For a list of valid step codes that you can use for a task, you can use:
 `ah get-task-info --task-id $task_id --section steps --output table`
