@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 from dataclasses import dataclass
-from pathlib import Path
 
 from requests import post
 
@@ -14,22 +13,20 @@ class CreateVersionViaLocalArchiveArgs:
     organization_id: int
     project_id: int
     name: str
-    archive_path: Path
 
 
 def api_create_version_via_local_archive(
-    context: AuditHubContext, input: CreateVersionViaLocalArchiveArgs
+    context: AuditHubContext, input: CreateVersionViaLocalArchiveArgs, fp
 ):
-    with input.archive_path.open("rb") as fp:
-        data = {"name": input.name}
+    data = {"name": input.name}
 
-        response = authentication_retry(
-            context,
-            post,
-            url=f"{context.base_url}/organizations/{input.organization_id}/projects/{input.project_id}/versions",
-            data=data,
-            files={"archive": ("sources.zip", fp, "application/zip")},
-        )
-        ensure_success(response)
-        ret = response_json(response)
-        return ret
+    response = authentication_retry(
+        context,
+        post,
+        url=f"{context.base_url}/organizations/{input.organization_id}/projects/{input.project_id}/versions",
+        data=data,
+        files={"archive": ("sources.zip", fp, "application/zip")},
+    )
+    ensure_success(response)
+    ret = response_json(response)
+    return ret

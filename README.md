@@ -18,6 +18,7 @@ The required arguments for any API call are the following (the name inside the p
 - `--oidc-client-secret` (`AUDITHUB_OIDC_CLIENT_SECRET`): The OIDC client secret (to be supplied by Veridise upon request). 
 
 Note: use `ah --help` to see the global arguments, applicable to all commands.
+Note: any logging output produced by the `ah` script is directed to stderr, so that output 
 
 **Important**: please note that the `client_id` and `client_secret` pair should be considered sensitive information, as anyone with access to these can trigger AuditHub actions that account towards the usage limits of the organization that was issued these credentials.
 
@@ -54,15 +55,17 @@ print(api_get_my_profile(rpc_context))
 # Script reference
 For a current script reference, please use `ah --help`. 
 Some interesting commands are the following:
-  - `create-version-via-local-archive`  Create a new version for a project by uploading a local .zip archive.
-  - `create-version-via-url`            Create a new version for a project by uploading a local .zip archive.
+  - `create-version-via-local-archive`  Create a new version for a project by uploading a local .zip archive, or creating one on the fly from a local folder.
+  - `create-version-via-url`            Create a new version for a project by asking AuditHub to either download an archive or clone a Git repository.
   - `get-configuration`                 Get global AuditHub configuration.
   - `get-task-info`                     Get detailed task information.
   - `monitor-task`                      Monitor a task's progress. Will exit with an exit status of 1 if the task did not complete successfully.
   - `start-defi-vanguard-task`          Start a Vanguard (static analysis) task for a specific version of a project.
   - `start-picus-v2-task`               Start a Picus V2 (Rust version) task for a module of a specific version of a project.
 
-Note that, all `ah start-...` commands support a `--wait` option that automatically invokes `ah monitor-task` on the newly started task, to wait for it to finish and exit with 0 on success or non-zero on failure.
+> **Note:** all `ah start-...` commands support a `--wait` option that automatically invokes `ah monitor-task` on the newly started task, to wait for it to finish and exit with 0 on success or non-zero on failure.
+
+> **Note:** The .zip files, created on the fly by `create-version-via-local-archive` with the `--source-folder` option, automatically exclude any `.git` folder as well as empty directories. If this does not match your requirements, you can still create a `.zip` archive outside `ah` and use that to upload a version with the same command but the `--archive-path` option.
 
 # Example usage to verify a new version with Picus
 

@@ -66,7 +66,11 @@ def meta(
     log_level: Annotated[
         str,
         Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
-        Parameter(name=["--log-level", "-l"], help="Log level"),
+        Parameter(
+            name=["--log-level", "-l"],
+            help="Log level",
+            env_var="AUDITHUB_LOG_LEVEL",
+        ),
     ] = "INFO",
 ):
     logging.basicConfig(
