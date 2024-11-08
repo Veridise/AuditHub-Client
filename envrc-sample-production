@@ -1,4 +1,4 @@
 export AUDITHUB_BASE_URL="https://audithub.veridise.com/api/v1"
 export AUDITHUB_OIDC_CONFIGURATION_URL="https://sso.veridise.com/auth/realms/veridise/.well-known/openid-configuration"
-export AUDITHUB_OIDC_CLIENT_ID="file_this_in"
-export AUDITHUB_OIDC_CLIENT_SECRET="file_this_in"
+export AUDITHUB_OIDC_CLIENT_ID="fill_this_in"
+export AUDITHUB_OIDC_CLIENT_SECRET="fill_this_in"

@@ -1,4 +1,4 @@
 export AUDITHUB_BASE_URL="https://audithub.dev.veridise.tools/api/v1"
 export AUDITHUB_OIDC_CONFIGURATION_URL="https://keycloak.dev.veridise.tools/auth/realms/veridise/.well-known/openid-configuration"
-export AUDITHUB_OIDC_CLIENT_ID="file_this_in"
-export AUDITHUB_OIDC_CLIENT_SECRET="file_this_in"
+export AUDITHUB_OIDC_CLIENT_ID="fill_this_in"
+export AUDITHUB_OIDC_CLIENT_SECRET="fill_this_in"
