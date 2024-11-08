@@ -5,7 +5,7 @@ from ..api.get_configuration import api_get_configuration
 from ..library.invocation_common import AuditHubContextType, app
 from ..library.json_dump import OutputType, dump_dict
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 @app.command

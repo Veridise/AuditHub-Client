@@ -7,7 +7,7 @@ from cyclopts import Parameter
 from ..api.monitor_task import MonitorTaskArgs, api_monitor_task
 from ..library.invocation_common import AuditHubContextType, OrganizationIdType, app
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 @app.command

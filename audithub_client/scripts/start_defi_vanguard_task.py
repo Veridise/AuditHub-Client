@@ -17,7 +17,7 @@ from ..library.invocation_common import (
     app,
 )
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 @app.command

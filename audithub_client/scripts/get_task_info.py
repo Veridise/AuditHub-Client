@@ -8,7 +8,7 @@ from ..api.get_task_info import GetTaskInfoArgs, api_get_task_info
 from ..library.invocation_common import AuditHubContextType, OrganizationIdType, app
 from ..library.json_dump import OutputType, dump_dict
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 @app.command

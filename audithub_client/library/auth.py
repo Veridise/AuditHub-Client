@@ -70,3 +70,8 @@ def authentication_retry(
         else:
             return response
     return response
+
+
+def reset_authentication():
+    if hasattr(authentication_retry, "access_token"):
+        delattr(authentication_retry, "access_token")
