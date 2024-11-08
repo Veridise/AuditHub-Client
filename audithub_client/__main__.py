@@ -7,7 +7,6 @@ from cyclopts import Group, Parameter
 from .library.context import AuditHubContext
 from .library.invocation_common import app
 
-
 app.meta.group_parameters = Group("Global Parameters")
 from .scripts.create_version_via_local_archive import (  # noqa
     create_version_via_local_archive,

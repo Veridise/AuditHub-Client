@@ -5,7 +5,7 @@ from tempfile import SpooledTemporaryFile
 from typing import Annotated, Optional
 from zipfile import ZIP_DEFLATED, ZipFile
 
-from cyclopts import Parameter, Group, validators
+from cyclopts import Group, Parameter, validators
 from cyclopts.types import ExistingDirectory, ExistingFile
 
 from ..api.create_version_via_local_archive import (
@@ -52,7 +52,7 @@ def add_folder_to_zip(
             if any(map(current_file.suffix.__eq__, excluded_file_extensions)):
                 continue
             current_zip_file_name = str(current_file.relative_to(source_folder))
-            logger.info(f"Adding %s", current_zip_file_name)
+            logger.info("Adding %s", current_zip_file_name)
             archive.write(current_file, current_zip_file_name)
 
 
