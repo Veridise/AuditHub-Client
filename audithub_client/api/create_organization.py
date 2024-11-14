@@ -15,9 +15,7 @@ class CreateOrganizationArgs:
     support_channel: Optional[str] = None
 
 
-def api_add_user_to_organization(
-    context: AuditHubContext, input: CreateOrganizationArgs
-):
+def api_create_organization(context: AuditHubContext, input: CreateOrganizationArgs):
     data = asdict(input)
     response = authentication_retry(
         context,
