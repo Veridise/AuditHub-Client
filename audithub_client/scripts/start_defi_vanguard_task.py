@@ -27,7 +27,9 @@ def start_defi_vanguard_task(
     project_id: ProjectIdType,
     version_id: VersionIdType,
     name: Optional[str] = None,
-    detector: Annotated[list[str], Parameter(validator=lambda _t, v: len(v) > 0)],
+    detector: Annotated[
+        list[str], Parameter(validator=lambda _t, v: len(v) > 0, consume_multiple=True)
+    ],
     input_limit: Optional[list[str]] = None,
     wait: bool = False,
     rpc_context: AuditHubContextType,

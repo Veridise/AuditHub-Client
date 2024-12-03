@@ -66,7 +66,7 @@ def meta(
         datefmt="%H:%M:%S",
         stream=sys.stderr,
     )
-    command, bound = app.parse_args(tokens)
+    command, bound, _ignored = app.parse_args(tokens)
     # When this script runs with no args, help_print is automatically invoked
     # Only in this situation however, it fails with: "TypeError: App.help_print() got an unexpected keyword argument 'rpc_context'"
     # By only, I mean it does not fail when invoked with "--help".
