@@ -18,6 +18,7 @@ from .scripts.get_my_profile import get_my_profile  # noqa
 from .scripts.get_task_artifact import get_task_artifact  # noqa
 from .scripts.get_task_info import get_task_info  # noqa
 from .scripts.get_task_logs import get_task_logs  # noqa
+from .scripts.get_users import get_users  # noqa
 from .scripts.monitor_task import monitor_task  # noqa
 from .scripts.start_defi_vanguard_task import start_defi_vanguard_task  # noqa
 from .scripts.start_picus_v2_task import start_picus_v2_task  # noqa
