@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-from dataclasses import dataclass
 from requests import get
 
 from ..library.auth import authentication_retry

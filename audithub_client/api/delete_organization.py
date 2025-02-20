@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-from dataclasses import asdict, dataclass
-from typing import Optional
+from dataclasses import dataclass
 
 from requests import delete
 

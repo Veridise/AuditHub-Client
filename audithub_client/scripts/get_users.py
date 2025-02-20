@@ -1,5 +1,4 @@
 import logging
-from typing import Optional
 
 from ..api.get_users import api_get_users
 from ..library.invocation_common import AuditHubContextType, app
