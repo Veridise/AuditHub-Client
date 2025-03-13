@@ -65,7 +65,7 @@ def authentication_retry(
         )
         if response.status_code == 401:
             # if auth_token expired, obtain a new one
-            authentication_retry.access_token = get_access_token(token_time_listener)  # type: ignore
+            authentication_retry.access_token = get_access_token(rpc_context, token_time_listener)  # type: ignore
             retries = retries - 1
         else:
             return response
