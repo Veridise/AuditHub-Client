@@ -33,6 +33,12 @@ To get help for a specific command, use `ah command --help`. For example: `ah ge
 
 Any option that can be set via an environment variable, also lists the corresponding environment variable name in the help text.
 
+# Verifying connectivity
+
+Once you receive your credentials, enable them in the shell environment and run: `ah get-my-profile`.
+
+This should output information about your user profile in AuditHub, and can help verify the validity of your credentials.
+
 
 # API Usage
 If you would like to use this module as a library, utilized by your own Python code, you can import the corresponding function from the API call you are interested in. 
