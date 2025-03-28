@@ -1,10 +1,12 @@
 import logging
-from typing import Annotated
-
-from cyclopts import Parameter
 
 from ..api.get_task_logs import GetTaskLogsArgs, api_get_task_logs
-from ..library.invocation_common import AuditHubContextType, OrganizationIdType, app
+from ..library.invocation_common import (
+    AuditHubContextType,
+    OrganizationIdType,
+    TaskIdType,
+    app,
+)
 from ..library.json_dump import OutputType, dump_dict
 
 logger = logging.getLogger(__name__)
@@ -14,7 +16,7 @@ logger = logging.getLogger(__name__)
 def get_task_logs(
     *,
     organization_id: OrganizationIdType,
-    task_id: Annotated[int, Parameter(name=["--task-id", "-t"])],
+    task_id: TaskIdType,
     step_code: str,
     output: OutputType = "list",
     rpc_context: AuditHubContextType,

@@ -21,6 +21,7 @@ from .scripts.get_task_logs import get_task_logs  # noqa
 from .scripts.get_users import get_users  # noqa
 from .scripts.monitor_task import monitor_task  # noqa
 from .scripts.start_defi_vanguard_task import start_defi_vanguard_task  # noqa
+from .scripts.start_orca_task import start_orca_task  # noqa
 from .scripts.start_picus_v2_task import start_picus_v2_task  # noqa
 
 

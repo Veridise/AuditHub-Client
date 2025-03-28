@@ -40,3 +40,7 @@ VersionIdType = Annotated[
         help="The version id, inside the selected project.",
     ),
 ]
+TaskIdType = Annotated[
+    int,
+    Parameter(name=["--task-id", "-t"], env_var="AUDITHUB_TASK_ID", help="The task id"),
+]

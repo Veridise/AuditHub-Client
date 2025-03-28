@@ -31,7 +31,7 @@ def api_start_defi_vanguard_task(
     data = {
         "name": input.name,
         "parameters": get_dict_of_fields_except(
-            input, {"organization_id", "project_id", "version_id", "name", "wait"}
+            input, {"organization_id", "project_id", "version_id", "name"}
         ),
     }
     logger.debug("Posting data: %s", data)

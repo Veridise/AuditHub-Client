@@ -32,7 +32,7 @@ def api_start_picus_v2_task(context: AuditHubContext, input: StartPicusV2TaskArg
     data = {
         "name": input.name,
         "parameters": get_dict_of_fields_except(
-            input, {"organization_id", "project_id", "version_id", "name", "wait"}
+            input, {"organization_id", "project_id", "version_id", "name"}
         ),
     }
     logger.debug("Posting data: %s", data)

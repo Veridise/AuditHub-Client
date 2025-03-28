@@ -1,11 +1,13 @@
 import logging
 from pathlib import Path
-from typing import Annotated
-
-from cyclopts import Parameter
 
 from ..api.get_task_artifact import GetTaskArtifactArgs, api_get_artifact
-from ..library.invocation_common import AuditHubContextType, OrganizationIdType, app
+from ..library.invocation_common import (
+    AuditHubContextType,
+    OrganizationIdType,
+    TaskIdType,
+    app,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -14,7 +16,7 @@ logger = logging.getLogger(__name__)
 def get_task_artifact(
     *,
     organization_id: OrganizationIdType,
-    task_id: Annotated[int, Parameter(name=["--task-id", "-t"])],
+    task_id: TaskIdType,
     artifact_id: int,
     output_file: Path,
     rpc_context: AuditHubContextType,

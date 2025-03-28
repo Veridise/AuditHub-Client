@@ -1,18 +1,20 @@
 import logging
 import sys
-from typing import Annotated
-
-from cyclopts import Parameter
 
 from ..api.monitor_task import MonitorTaskArgs, api_monitor_task
-from ..library.invocation_common import AuditHubContextType, OrganizationIdType, app
+from ..library.invocation_common import (
+    AuditHubContextType,
+    OrganizationIdType,
+    TaskIdType,
+    app,
+)
 
 logger = logging.getLogger(__name__)
 
 
 @app.command
 def monitor_task(
-    task_id: Annotated[int, Parameter(name=["--task-id", "-t"])],
+    task_id: TaskIdType,
     *,
     organization_id: OrganizationIdType,
     rpc_context: AuditHubContextType,

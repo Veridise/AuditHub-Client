@@ -1,11 +1,14 @@
 import logging
 import sys
-from typing import Annotated, Optional
-
-from cyclopts import Parameter
+from typing import Optional
 
 from ..api.get_task_info import GetTaskInfoArgs, api_get_task_info
-from ..library.invocation_common import AuditHubContextType, OrganizationIdType, app
+from ..library.invocation_common import (
+    AuditHubContextType,
+    OrganizationIdType,
+    TaskIdType,
+    app,
+)
 from ..library.json_dump import OutputType, dump_dict
 
 logger = logging.getLogger(__name__)
@@ -16,7 +19,7 @@ def get_task_info(
     section: Optional[str] = None,
     *,
     organization_id: OrganizationIdType,
-    task_id: Annotated[int, Parameter(name=["--task-id", "-t"])],
+    task_id: TaskIdType,
     output: OutputType = "json",
     verify: bool = False,
     rpc_context: AuditHubContextType,

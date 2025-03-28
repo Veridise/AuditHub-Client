@@ -5,10 +5,22 @@ MODULE="audithub_client"
 all: check
 
 .PHONY:check
-check: isort mypy ruff
+check: black isort ruff mypy
+
+.PHONY:black
+black:
+	black --check $(MODULE)
+
+.PHONY:black-fix
+black-fix:
+	black $(MODULE)
 
 .PHONY:isort
 isort:
+	isort --check $(MODULE)
+
+.PHONY:isort-fix
+isort-fix:
 	isort $(MODULE)
 
 .PHONY:mypy
@@ -19,10 +31,13 @@ mypy:
 ruff:
 	ruff check $(MODULE)
 
-.PHONY:stubs
-stubs:
-	stubgen -p audithub_client -o stubs
+.PHONY:ruff-fix
+ruff-fix:
+	ruff check --fix $(MODULE)
 
 .PHONY: mypy-types
 mypy-types:
 	mypy --install-types --non-interactive
+
+.PHONY: fix
+fix: isort-fix black-fix ruff-fix
