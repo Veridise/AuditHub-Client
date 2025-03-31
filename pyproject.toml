@@ -12,6 +12,7 @@ requests = "*"
 websockets = "*"
 tabulate = "*"
 cyclopts = "*"
+humanize = "^4.12.2"
 
 
 [build-system]

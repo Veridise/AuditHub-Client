@@ -9,17 +9,17 @@ from ..library.net_utils import ensure_success
 
 
 @dataclass
-class GetTaskArtifactArgs:
+class GetVersionArchiveArgs:
     organization_id: int
-    task_id: int
-    artifact_id: int
+    project_id: int
+    version_id: int
 
 
-def api_get_artifact(context: AuditHubContext, input: GetTaskArtifactArgs):
+def api_get_version_archive(context: AuditHubContext, input: GetVersionArchiveArgs):
     response = authentication_retry(
         context,
         get,
-        url=f"{context.base_url}/organizations/{input.organization_id}/tasks/{input.task_id}/artifacts/{input.artifact_id}",
+        url=f"{context.base_url}/organizations/{input.organization_id}/projects/{input.project_id}/versions/{input.version_id}/archive",
         stream=True,
     )
     ensure_success(response)
