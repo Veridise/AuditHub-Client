@@ -1,5 +1,7 @@
 #!/bin/sh
 MODULE="audithub_client"
+IMAGE_NAME="veridise/audithub-client"
+IMAGE_TAG="latest"
 
 .PHONY:all
 all: check
@@ -41,3 +43,19 @@ mypy-types:
 
 .PHONY: fix
 fix: isort-fix black-fix ruff-fix
+
+.PHONY: image
+image:
+	docker build --platform=linux/amd64,linux/arm64 -t $(IMAGE_NAME):$(IMAGE_TAG) .
+
+.PHONY: push
+push:
+	docker push $(IMAGE_NAME):$(IMAGE_TAG)
+
+.PHONY: image-versioned
+image-versioned:
+	docker build --platform=linux/amd64,linux/arm64 -t $(IMAGE_NAME):$(IMAGE_TAG) -t $(IMAGE_NAME):$(shell poetry version -s) .
+
+.PHONY: push-versioned
+push-versioned:
+	docker push $(IMAGE_NAME):$(shell poetry version -s)

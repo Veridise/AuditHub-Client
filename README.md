@@ -104,3 +104,13 @@ Or, to get a parsable list:
 
 With this, you can preserve all logs locally:
 `for step in $(ah get-task-info --task-id $task_id --section steps --output json | jq -r '. [].code'); do ah get-task-logs --task-id $task_id --step-code $step > $step.log; done`
+
+# Building a container image
+Use `make image` to just build the `latest` tag.
+
+Use `make image-versioned` to build an image tagger with both `latest` and the current version number of this module, as stored in `pyproject.toml`
+
+Finally, use `make push` to push latest and `make push-versioned` to push the image tagger with the current version.
+
+As a side note, for `docker build --platform=linux/amd64,linux/arm64 ...` to work, the machine's container runtime needs to support multi-platform builds. Specifically for Docker, this requires switching from the "classic" image store to the containerd image store as outlined [here](https://docs.docker.com/build/building/multi-platform/).
+For Docker Desktop, you can set the "Use containerd for pulling and storing images" option in the user interface as described [here](https://docs.docker.com/desktop/features/containerd/). 
