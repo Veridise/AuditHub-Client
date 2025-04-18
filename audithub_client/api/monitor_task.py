@@ -102,7 +102,7 @@ def api_monitor_task(context: AuditHubContext, input: MonitorTaskArgs) -> bool:
                         ),
                     )
                 elif kind == "TaskStepLogMessage":
-                    print(f"[{task_message["step_code"]}] {task_message["entry"]}")
+                    print(f"[{task_message["step_code"]}] {task_message["entry"]}", flush=True)
         except ConnectionClosedOK as ex:
             logger.info("Websocket client: All server logs are received.", ex.reason)
         except Exception as ex:  # pylint: disable=broad-exception-caught
