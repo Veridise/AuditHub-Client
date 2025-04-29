@@ -32,6 +32,13 @@ Use `ah --help` to list all supported commands, as well as the global options th
 To get help for a specific command, use `ah command --help`. For example: `ah get-task-info --help`.
 
 Any option that can be set via an environment variable, also lists the corresponding environment variable name in the help text.
+To set a list option via an environment variable, use JSON notation. e.g.: `export LIST_OPTION='["value 1", "value 2"]'`
+To set a list option via the command line, either repeat the same option multiple times, or separate the list elements via space. e.g.:
+```shell
+ah cmd --list-option "value 1" --list-option "value 2"
+# or
+ah cmd --list-option "value 1" "value 2"
+```
 
 # Verifying connectivity
 

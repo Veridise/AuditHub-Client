@@ -74,13 +74,20 @@ def create_version_via_local_archive(
         Optional[ExistingDirectory], Parameter(group=source)
     ] = None,
     excluded_directories: Annotated[
-        set[str], Parameter(env_var="AUDITHUB_ZIP_EXCLUDED_DIRECTORIES")
+        set[str],
+        Parameter(env_var="AUDITHUB_ZIP_EXCLUDED_DIRECTORIES", consume_multiple=True),
     ] = EXCLUDED_DIRECTORIES,
     excluded_file_name_prefixes: Annotated[
-        list[str], Parameter(env_var="AUDITHUB_ZIP_EXCLUDED_FILE_EXTENSIONS")
+        list[str],
+        Parameter(
+            env_var="AUDITHUB_ZIP_EXCLUDED_FILE_EXTENSIONS", consume_multiple=True
+        ),
     ] = EXCLUDED_FILE_EXTENSIONS,
     excluded_file_extensions: Annotated[
-        list[str], Parameter(env_var="AUDITHUB_ZIP_EXCLUDED_FILE_EXTENSIONS")
+        list[str],
+        Parameter(
+            env_var="AUDITHUB_ZIP_EXCLUDED_FILE_EXTENSIONS", consume_multiple=True
+        ),
     ] = EXCLUDED_FILE_EXTENSIONS,
     rpc_context: AuditHubContextType,
 ):
