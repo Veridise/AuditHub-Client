@@ -54,7 +54,6 @@ def meta(
         ),
     ],
     log_level: Annotated[
-        str,
         Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
         Parameter(
             name=["--log-level", "-l"],
