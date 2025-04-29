@@ -39,7 +39,7 @@ def api_monitor_task(context: AuditHubContext, input: MonitorTaskArgs) -> bool:
         f"{url}/organizations/{input.organization_id}/tasks/{input.task_id}/progress"
     )
     status: ALLOWED_STATUS_OPTIONS
-    with connect(endpoint) as websocket:
+    with connect(endpoint, max_size=100 * 1024 * 1024) as websocket:
         try:
             # send initial authentication
             websocket.send(token)
