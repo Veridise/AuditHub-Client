@@ -21,6 +21,7 @@ from ..library.invocation_common import (
     VersionIdType,
     app,
 )
+from ..library.orca_utils import restructure_fuzzing_blacklist
 
 logger = logging.getLogger(__name__)
 
@@ -34,10 +35,21 @@ def start_orca_task(
     name: Optional[str] = None,
     timeout: Optional[int] = None,
     detect_reentrancy: bool = False,
-    embedded_specs: Annotated[
-        Optional[list[str]], Parameter(consume_multiple=True)
+    fuzz_pure: Annotated[Optional[bool], Parameter(negative_bool=())] = None,
+    fuzz_targets: Annotated[
+        Optional[list[str]], Parameter(consume_multiple=True, negative_iterable=())
     ] = None,
-    ad_hoc_specs: Optional[list[str]] = None,
+    fuzzing_blacklist: Annotated[
+        Optional[list[str]], Parameter(consume_multiple=True, negative_iterable=())
+    ] = None,
+    fork_network: Optional[str] = None,
+    fork_block_number: Optional[int] = None,
+    embedded_specs: Annotated[
+        Optional[list[str]], Parameter(consume_multiple=True, negative_iterable=())
+    ] = None,
+    ad_hoc_specs: Annotated[
+        Optional[list[str]], Parameter(consume_multiple=True, negative_iterable=())
+    ] = None,
     wait: bool = False,
     rpc_context: AuditHubContextType,
 ):
@@ -58,6 +70,21 @@ def start_orca_task(
     detect_reentrancy:
         If enabled, accounts simulated by OrCa will attempt to make reentrant calls when they are called or receive native currency.
 
+    fuzz_pure:
+        Enable fuzzing of functions that do not alter contract state.
+
+    fuzz_targets:
+        List of contract names. If specified, OrCa will only try to fuzz the specified contracts.
+
+    fuzzing_blacklist:
+        List of the contract/function pairs to be ignored during the fuzzing process. Specify them as a list of 'contract.function' strings.
+
+    fork_network:
+        Optionally, a network to fork from. For valid values, please run "ah get-configuration fork_networks" and use the "code" field.
+
+    fork_block_number:
+        The number of the last block to fork
+
     embedded_specs:
         A list of relative paths, from the version archive root, for V specs to use that are embedded in the version archive.
 
@@ -69,10 +96,6 @@ def start_orca_task(
     wait:
         If specified, this script will monitor the task and wait for it to finish. The exit code will reflect the success or failure of the task, regardless of findings produced by the analysis.
     """
-    parameters = {}
-    if timeout:
-        parameters["timeout"] = timeout
-    parameters["disable_user_proxies"] = not detect_reentrancy
 
     specs: list[VSpec] = []
     for spec in embedded_specs or []:
@@ -86,13 +109,27 @@ def start_orca_task(
             )
         )
 
+    if fork_block_number is not None and fork_network is None:
+        print(
+            "ERROR: You can only specify a fork block number when also specifying a fork network"
+        )
+        sys.exit(1)
+
     try:
         rpc_input = StartOrCaTaskArgs(
             organization_id=organization_id,
             project_id=project_id,
             version_id=version_id,
             name=name,
-            parameters=OrCaParameters(**parameters),  # type: ignore
+            parameters=OrCaParameters(
+                timeout=timeout,
+                disable_user_proxies=not detect_reentrancy,
+                fuzz_pure=fuzz_pure,
+                fuzz_targets=fuzz_targets,
+                fuzzing_blacklist=restructure_fuzzing_blacklist(fuzzing_blacklist),
+                fork_network=fork_network,
+                fork_block_number=fork_block_number,
+            ),
             specs=specs,
         )
         logger.debug("Starting...")

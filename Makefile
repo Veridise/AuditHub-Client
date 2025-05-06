@@ -59,3 +59,7 @@ image-versioned:
 .PHONY: push-versioned
 push-versioned:
 	docker push $(IMAGE_NAME):$(shell poetry version -s)
+
+.PHONY: test
+test:
+	python -m unittest discover tests "*_test.py"
