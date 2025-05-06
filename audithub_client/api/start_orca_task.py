@@ -53,17 +53,23 @@ VSpec = (
     | VSpecAdHoc
 )
 
+ORCA_DEFAULT_TIMEOUT = 600
+
 
 @dataclass
 class OrCaParameters:
+    timeout: Optional[int] = None
     disable_user_proxies: Optional[bool] = None
     fuzz_pure: Optional[bool] = None
     fuzz_targets: Optional[list[str]] = None
     fuzzing_blacklist: Optional[list[FuzzingBlacklistEntry]] = None
-    timeout: int = 600
     fork_network: Optional[str] = None
     fork_block_number: Optional[int] = None
     language: Literal["solidity"] = "solidity"
+
+    def __post_init__(self):
+        if self.timeout is None:
+            self.timeout = ORCA_DEFAULT_TIMEOUT
 
 
 @dataclass
