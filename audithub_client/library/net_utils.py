@@ -3,8 +3,8 @@ from pathlib import Path
 from typing import Tuple
 
 from humanize import naturalsize
-from requests import Response
 
+from ..library.http import Response
 from .utils import parent_func
 
 

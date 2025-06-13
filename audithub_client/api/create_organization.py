@@ -2,10 +2,9 @@
 from dataclasses import asdict, dataclass
 from typing import Optional
 
-from requests import post
-
 from ..library.auth import authentication_retry
 from ..library.context import AuditHubContext
+from ..library.http import post
 from ..library.net_utils import ensure_success, response_json
 
 

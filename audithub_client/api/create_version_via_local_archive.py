@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 from dataclasses import dataclass
 
-from requests import post
-
 from ..library.auth import authentication_retry
 from ..library.context import AuditHubContext
+from ..library.http import post
 from ..library.net_utils import ensure_success, response_json
 
 

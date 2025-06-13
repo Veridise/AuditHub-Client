@@ -3,9 +3,8 @@ import logging
 import time
 from typing import Callable, Optional
 
-from requests import Response, get, post
-
 from .context import AuditHubContext
+from .http import Response, get, post
 
 RESPONSE_TIMEOUT = 90
 logger = logging.getLogger(__name__)

@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
-from requests import get
-
 from ..library.context import AuditHubContext
+from ..library.http import get
 from ..library.net_utils import ensure_success, response_json
 
 
