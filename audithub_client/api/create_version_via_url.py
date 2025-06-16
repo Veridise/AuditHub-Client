@@ -4,7 +4,7 @@ from typing import Literal, Optional
 
 from ..library.auth import authentication_retry
 from ..library.context import AuditHubContext
-from ..library.http import post
+from ..library.http import POST
 from ..library.net_utils import ensure_success, response_json
 from ..library.utils import get_dict_of_fields_except
 
@@ -27,7 +27,7 @@ def api_create_version_via_url(
 
     response = authentication_retry(
         context,
-        post,
+        POST,
         url=f"{context.base_url}/organizations/{input.organization_id}/projects/{input.project_id}/versions-url",
         data=data,
     )

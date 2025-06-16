@@ -3,8 +3,8 @@ from dataclasses import dataclass
 
 from ..library.auth import authentication_retry
 from ..library.context import AuditHubContext
-from ..library.http import get
-from ..library.net_utils import ensure_success
+from ..library.http import GET
+from ..library.net_utils import Downloader
 
 
 @dataclass
@@ -14,12 +14,13 @@ class GetTaskArtifactArgs:
     artifact_id: int
 
 
-def api_get_artifact(context: AuditHubContext, input: GetTaskArtifactArgs):
+def api_get_artifact(
+    context: AuditHubContext, input: GetTaskArtifactArgs, downloader: Downloader
+):
     response = authentication_retry(
         context,
-        get,
+        GET,
         url=f"{context.base_url}/organizations/{input.organization_id}/tasks/{input.task_id}/artifacts/{input.artifact_id}",
-        stream=True,
+        downloader=downloader,
     )
-    ensure_success(response)
     return response

@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 from ..library.auth import authentication_retry
 from ..library.context import AuditHubContext
-from ..library.http import delete
+from ..library.http import DELETE
 from ..library.net_utils import ensure_success, response_json
 
 
@@ -15,7 +15,7 @@ class DeleteOrganizationArgs:
 def api_delete_organization(context: AuditHubContext, input: DeleteOrganizationArgs):
     response = authentication_retry(
         context,
-        delete,
+        DELETE,
         url=f"{context.base_url}/organizations/{input.id}",
     )
     ensure_success(response)

@@ -2,13 +2,13 @@
 
 from ..library.auth import authentication_retry
 from ..library.context import AuditHubContext
-from ..library.http import get
+from ..library.http import GET
 from ..library.net_utils import ensure_success, response_json
 
 
 def api_get_my_profile(context: AuditHubContext):
     response = authentication_retry(
-        context, get, url=f"{context.base_url}/users/myprofile"
+        context, GET, url=f"{context.base_url}/users/myprofile"
     )
     ensure_success(response)
     return response_json(response)

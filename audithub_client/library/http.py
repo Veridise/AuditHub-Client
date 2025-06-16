@@ -1,6 +1,12 @@
-from requests import Request as Request
-from requests import Response as Response
-from requests import delete as delete
-from requests import get as get
-from requests import post as post
-from requests import put as put
+from httpx import Request as Request
+from httpx import Response as Response
+from httpx import Timeout as Timeout
+from httpx import delete as delete
+from httpx import get as get
+from httpx import post as post
+from httpx import put as put
+
+GET = "GET"
+DELETE = "DELETE"
+POST = "POST"
+PUT = "PUT"

@@ -8,11 +8,11 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-requests = "*"
 websockets = "*"
 tabulate = "*"
 cyclopts = "*"
 humanize = "*"
+httpx = "*"
 
 
 [build-system]

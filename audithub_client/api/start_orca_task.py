@@ -5,7 +5,7 @@ from typing import Literal, Optional
 
 from ..library.auth import authentication_retry
 from ..library.context import AuditHubContext
-from ..library.http import post
+from ..library.http import POST
 from ..library.net_utils import ensure_success, response_json
 
 logger = logging.getLogger(__name__)
@@ -96,7 +96,7 @@ def api_start_orca_task(
 
     response = authentication_retry(
         context,
-        post,
+        POST,
         url=f"{context.base_url}/organizations/{input.organization_id}/projects/{input.project_id}/versions/{input.version_id}/tools/orca",
         json=data,
     )

@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 from ..library.auth import authentication_retry
 from ..library.context import AuditHubContext
-from ..library.http import get
+from ..library.http import GET
 from ..library.net_utils import ensure_success, response_json
 
 
@@ -16,7 +16,7 @@ class GetTaskInfoArgs:
 def api_get_task_info(context: AuditHubContext, input: GetTaskInfoArgs):
     response = authentication_retry(
         context,
-        get,
+        GET,
         url=f"{context.base_url}/organizations/{input.organization_id}/tasks/{input.task_id}",
     )
     ensure_success(response)

@@ -29,6 +29,17 @@ def response_json(response: Response):
 def download_file(response: Response, output_file: Path) -> Tuple[int, str]:
     bytes_written = 0
     with output_file.open("wb") as f:
-        for chunk in response.iter_content(chunk_size=None):
+        for chunk in response.iter_bytes(chunk_size=8192):
             bytes_written += f.write(chunk)
     return bytes_written, naturalsize(bytes_written, binary=True)
+
+
+class Downloader:
+    def __init__(self, output_file: Path):
+        self.output_file = output_file
+        self.bytes_written = 0
+        self.hr_size = ""
+
+    def download(self, response: Response):
+        ensure_success(response)
+        self.bytes_written, self.hr_size = download_file(response, self.output_file)
