@@ -3,10 +3,9 @@ import logging
 from dataclasses import dataclass
 from typing import Optional
 
-from requests import post
-
 from ..library.auth import authentication_retry
 from ..library.context import AuditHubContext
+from ..library.http import POST
 from ..library.net_utils import ensure_success, response_json
 from ..library.utils import get_dict_of_fields_except
 
@@ -38,7 +37,7 @@ def api_start_defi_vanguard_task(
 
     response = authentication_retry(
         context,
-        post,
+        POST,
         url=f"{context.base_url}/organizations/{input.organization_id}/projects/{input.project_id}/versions/{input.version_id}/tools/vanguard",
         json=data,
     )

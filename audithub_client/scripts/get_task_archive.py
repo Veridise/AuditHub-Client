@@ -8,7 +8,7 @@ from ..library.invocation_common import (
     TaskIdType,
     app,
 )
-from ..library.net_utils import download_file
+from ..library.net_utils import Downloader
 
 logger = logging.getLogger(__name__)
 
@@ -34,9 +34,9 @@ def get_task_archive(
         rpc_input = GetTaskArchiveArgs(organization_id=organization_id, task_id=task_id)
         logger.debug("Starting...")
         logger.debug(str(input))
-        response = api_get_task_archive(rpc_context, rpc_input)
-        bytes_written, hr_size = download_file(response, output_file)
-        logger.info(f"Wrote {bytes_written} bytes ({hr_size}).")
+        downloader = Downloader(output_file)
+        api_get_task_archive(rpc_context, rpc_input, downloader)
+        logger.info(f"Wrote {downloader.bytes_written} bytes ({downloader.hr_size}).")
         logger.debug("Finished.")
     except Exception as ex:
         logger.error("Error %s", str(ex), exc_info=ex)

@@ -138,7 +138,10 @@ def create_version_via_local_archive(
             assert archive_path is not None
             file_size = archive_path.stat().st_size
             logger.info(
-                "Posting version archive %s of size %d bytes", archive_path, file_size
+                "Posting version %s with archive %s of size %d bytes",
+                name,
+                archive_path,
+                file_size,
             )
             with archive_path.open("rb") as fp:
                 ret = api_create_version_via_local_archive(rpc_context, rpc_input, fp)

@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 from dataclasses import dataclass
 
-from requests import post
-
 from ..library.auth import authentication_retry
 from ..library.context import AuditHubContext
+from ..library.http import POST
 from ..library.net_utils import ensure_success, response_json
 
 
@@ -22,7 +21,7 @@ def api_create_version_via_local_archive(
 
     response = authentication_retry(
         context,
-        post,
+        POST,
         url=f"{context.base_url}/organizations/{input.organization_id}/projects/{input.project_id}/versions",
         data=data,
         files={"archive": ("sources.zip", fp, "application/zip")},

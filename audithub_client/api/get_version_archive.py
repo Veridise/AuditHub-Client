@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 from dataclasses import dataclass
 
-from requests import get
-
 from ..library.auth import authentication_retry
 from ..library.context import AuditHubContext
-from ..library.net_utils import ensure_success
+from ..library.http import GET
+from ..library.net_utils import Downloader
 
 
 @dataclass
@@ -15,12 +14,13 @@ class GetVersionArchiveArgs:
     version_id: int
 
 
-def api_get_version_archive(context: AuditHubContext, input: GetVersionArchiveArgs):
+def api_get_version_archive(
+    context: AuditHubContext, input: GetVersionArchiveArgs, downloader: Downloader
+):
     response = authentication_retry(
         context,
-        get,
+        GET,
         url=f"{context.base_url}/organizations/{input.organization_id}/projects/{input.project_id}/versions/{input.version_id}/archive",
-        stream=True,
+        downloader=downloader,
     )
-    ensure_success(response)
     return response

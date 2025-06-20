@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 from dataclasses import dataclass
 
-from requests import post
-
 from ..library.auth import authentication_retry
 from ..library.context import AuditHubContext
+from ..library.http import POST
 from ..library.net_utils import ensure_success, response_json
 from ..library.utils import get_dict_of_fields_except
 
@@ -21,7 +20,7 @@ def api_add_user_to_organization(
     data = get_dict_of_fields_except(input, {"organization_id"})
     response = authentication_retry(
         context,
-        post,
+        POST,
         url=f"{context.base_url}/organizations/{input.organization_id}/users",
         json=data,
     )

@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 from dataclasses import dataclass
 
-from requests import delete
-
 from ..library.auth import authentication_retry
 from ..library.context import AuditHubContext
+from ..library.http import DELETE
 from ..library.net_utils import ensure_success, response_json
 
 
@@ -16,7 +15,7 @@ class DeleteOrganizationArgs:
 def api_delete_organization(context: AuditHubContext, input: DeleteOrganizationArgs):
     response = authentication_retry(
         context,
-        delete,
+        DELETE,
         url=f"{context.base_url}/organizations/{input.id}",
     )
     ensure_success(response)
