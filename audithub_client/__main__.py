@@ -69,6 +69,9 @@ def meta(
         datefmt="%H:%M:%S",
         stream=sys.stderr,
     )
+    httpx_logger = logging.getLogger("httpx")
+    httpx_logger.setLevel(logging.WARNING)
+
     command, bound, _ignored = app.parse_args(tokens)
     # When this script runs with no args, help_print is automatically invoked
     # Only in this situation however, it fails with: "TypeError: App.help_print() got an unexpected keyword argument 'rpc_context'"
