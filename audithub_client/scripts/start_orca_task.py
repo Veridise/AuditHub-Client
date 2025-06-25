@@ -7,6 +7,9 @@ from cyclopts import Parameter
 
 from ..api.monitor_task import MonitorTaskArgs, api_monitor_task
 from ..api.start_orca_task import (
+    Hint,
+    HintAdHoc,
+    HintFromVersion,
     OrCaParameters,
     StartOrCaTaskArgs,
     VSpec,
@@ -50,6 +53,13 @@ def start_orca_task(
     ad_hoc_specs: Annotated[
         Optional[list[str]], Parameter(consume_multiple=True, negative_iterable=())
     ] = None,
+    embedded_hints: Annotated[
+        Optional[list[str]], Parameter(consume_multiple=True, negative_iterable=())
+    ] = None,
+    ad_hoc_hints: Annotated[
+        Optional[list[str]], Parameter(consume_multiple=True, negative_iterable=())
+    ] = None,
+    deployment_script_path: Optional[str] = None,
     wait: bool = False,
     rpc_context: AuditHubContextType,
 ):
@@ -92,6 +102,15 @@ def start_orca_task(
         A list of file paths, at the local filesystem, for V specs to use that exist in the machine invoking this script.
         Note that, the filename submitted to AuditHub will only be the filename part, without any folder information.
 
+    embedded_hints:
+        A list of relative paths, from the version archive root, for hints to use that are embedded in the version archive.
+
+    ad_hoc_hints:
+        A list of file paths, at the local filesystem, for hints to use that exist in the machine invoking this script.
+        Note that, the filename submitted to AuditHub will only be the filename part, without any folder information.
+
+    deployment_script_path:
+        An optional deployment script path to be used during deployment. If provided, it overrides the value set in project level.
 
     wait:
         If specified, this script will monitor the task and wait for it to finish. The exit code will reflect the success or failure of the task, regardless of findings produced by the analysis.
@@ -104,6 +123,18 @@ def start_orca_task(
     for local_file in [Path(spec) for spec in ad_hoc_specs or []]:
         specs.append(
             VSpecAdHoc(
+                filename=local_file.name,
+                contents=local_file.read_text(encoding="UTF-8"),
+            )
+        )
+
+    hints: list[Hint] = []
+    for hint in embedded_hints or []:
+        hints.append(HintFromVersion(relative_path=hint))
+
+    for local_file in [Path(hint) for hint in ad_hoc_hints or []]:
+        hints.append(
+            HintAdHoc(
                 filename=local_file.name,
                 contents=local_file.read_text(encoding="UTF-8"),
             )
@@ -131,6 +162,8 @@ def start_orca_task(
                 fork_block_number=fork_block_number,
             ),
             specs=specs,
+            hints=hints,
+            deployment_script_path_override=deployment_script_path,
         )
         logger.debug("Starting...")
         logger.debug(str(input))
