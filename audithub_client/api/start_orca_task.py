@@ -52,6 +52,39 @@ VSpec = (
     | VSpecAdHoc
 )
 
+
+@dataclass
+class HintFromVersion:
+    relative_path: str
+    type: Literal["version"] = "version"
+
+
+@dataclass
+class HintFromStandardLibrary:
+    category: str
+    name: str
+    library_version: Optional[str] = None
+    type: Literal["stdlib"] = "stdlib"
+
+
+@dataclass
+class HintFromOrganizationLibrary:
+    id: int
+    type: Literal["orglib"] = "orglib"
+
+
+@dataclass
+class HintAdHoc:
+    filename: str
+    contents: str
+    encoding: Literal["plain"] = "plain"
+    type: Literal["adhoc"] = "adhoc"
+
+
+Hint = (
+    HintFromVersion | HintFromStandardLibrary | HintFromOrganizationLibrary | HintAdHoc
+)
+
 ORCA_DEFAULT_TIMEOUT = 600
 
 
@@ -79,6 +112,8 @@ class StartOrCaTaskArgs:
     name: Optional[str]
     parameters: OrCaParameters
     specs: list[VSpec]
+    hints: Optional[list[Hint]]
+    deployment_script_path_override: Optional[str]
 
 
 def api_start_orca_task(
@@ -91,6 +126,10 @@ def api_start_orca_task(
         "name": input.name,
         "parameters": asdict(input.parameters),
         "specs_override": list([asdict(spec) for spec in input.specs]),
+        "hints_override": (
+            list([asdict(hint) for hint in input.hints]) if input.hints else None
+        ),
+        "deployment_script_path_override": input.deployment_script_path_override,
     }
     logger.debug("Posting data: %s", data)
 
