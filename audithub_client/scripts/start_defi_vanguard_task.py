@@ -4,6 +4,7 @@ from typing import Annotated, Optional
 
 from cyclopts import Parameter
 
+from ..api.get_configuration import api_get_configuration
 from ..api.monitor_task import MonitorTaskArgs, api_monitor_task
 from ..api.start_defi_vanguard_task import (
     StartDeFiVanguardTaskArgs,
@@ -51,6 +52,14 @@ def start_defi_vanguard_task(
         If specified, this script will monitor the task and wait for it to finish. The exit code will reflect the success or failure of the task, regardless of findings produced by the analysis.
     """
     try:
+        configuration = api_get_configuration(rpc_context)
+        supported_detectors = set(
+            [e["code"] for e in configuration["vanguard_defi_detectors"]]
+        )
+        for d in detector:
+            if d not in supported_detectors:
+                raise ValueError(f"'{d}' is not a valid detector name.")
+
         rpc_input = StartDeFiVanguardTaskArgs(
             organization_id=organization_id,
             project_id=project_id,
