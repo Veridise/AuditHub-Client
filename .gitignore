@@ -166,3 +166,4 @@ poetry.toml
 private/
 .vscode/
 .ruff_cache/
+tests/private/
