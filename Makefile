@@ -63,3 +63,7 @@ push-versioned:
 .PHONY: test
 test:
 	python -m unittest discover tests "*_test.py"
+
+.PHONY: release
+release: image-versioned image push-versioned push
+	@echo "Release $(shell poetry version -s) done"
