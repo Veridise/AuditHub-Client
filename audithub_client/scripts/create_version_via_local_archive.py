@@ -53,7 +53,12 @@ def add_folder_to_zip(
                 continue
             current_zip_file_name = str(current_file.relative_to(source_folder))
             logger.info("Adding %s", current_zip_file_name)
-            archive.write(current_file, current_zip_file_name)
+            try:
+                archive.write(current_file, current_zip_file_name)
+            except Exception as ex:
+                logger.warning(
+                    f"Failed to add file {current_file} to the archive", exc_info=ex
+                )
 
 
 source = Group(
