@@ -67,3 +67,12 @@ test:
 .PHONY: release
 release: image-versioned image push-versioned push
 	@echo "Release $(shell poetry version -s) done"
+
+.PHONY: tag
+tag: 
+	git tag v$(shell poetry version -s)
+
+
+.PHONY: push-tag
+push-tag: 
+	git push --tags
