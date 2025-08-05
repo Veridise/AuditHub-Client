@@ -3,7 +3,9 @@ name: Docker Build
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
+    branches:
+      - docker-build
 
 jobs:
   docker-build:
@@ -22,7 +24,8 @@ jobs:
 
       - name: Extract tag version
         id: extract_tag
-        run: echo "IMAGE_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+        # run: echo "IMAGE_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+        run: echo "IMAGE_TAG=test" >> $GITHUB_ENV
 
       - name: Build docker image
         uses: docker/build-push-action@v6
@@ -82,6 +85,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
+          platforms: linux/amd64,linux/arm64
           tags: veridise/audithub-client:${{ github.sha }}, veridise/audithub-client:${{ env.IMAGE_TAG }}
           # Caching options
           cache-from: type=gha

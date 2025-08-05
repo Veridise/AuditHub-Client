@@ -1,13 +1,19 @@
-FROM python:3.13-alpine AS base
+FROM python:3.13-slim AS base
 
 ENV PYTHONFAULTHANDLER=1 \
     PYTHONHASHSEED=random \
     PYTHONUNBUFFERED=1
 
+RUN apt-get update && apt-get install -y \
+    unzip \
+    curl \
+    && curl https://rclone.org/install.sh | bash \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 # Stage - builder
-FROM python:3.13-alpine AS builder
+FROM python:3.13-slim AS builder
 
 ENV PIP_DEFAULT_TIMEOUT=100 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
@@ -30,7 +36,7 @@ FROM base AS release
 
 # add new user
 ENV USER=appuser
-RUN adduser -D $USER
+RUN useradd $USER
 
 ENV PATH="/venv/bin:$PATH"
 
