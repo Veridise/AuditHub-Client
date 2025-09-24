@@ -8,6 +8,7 @@ from ..library.invocation_common import (
     AuditHubContextType,
     OrganizationIdType,
     ProjectIdType,
+    TaskWaitType,
     VersionIdType,
     app,
 )
@@ -27,7 +28,7 @@ def start_picus_v2_task(
     solver_timeout: Optional[int] = None,
     time_limit: Optional[int] = None,
     assume_deterministic: Optional[list[str]] = None,
-    wait: bool = False,
+    wait: TaskWaitType = False,
     rpc_context: AuditHubContextType,
 ):
     """
@@ -60,8 +61,6 @@ def start_picus_v2_task(
         An optional list of modules inside the selected source file.
         Tells Picus to assume the list of modules provided are deterministic.
 
-    wait:
-        If specified, this script will monitor the task and wait for it to finish. The exit code will reflect the success or failure of the task, regardless of findings produced by the analysis.
     """
     try:
         rpc_input = StartPicusV2TaskArgs(

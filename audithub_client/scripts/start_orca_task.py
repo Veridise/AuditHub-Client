@@ -21,6 +21,7 @@ from ..library.invocation_common import (
     AuditHubContextType,
     OrganizationIdType,
     ProjectIdType,
+    TaskWaitType,
     VersionIdType,
     app,
 )
@@ -60,7 +61,7 @@ def start_orca_task(
         Optional[list[str]], Parameter(consume_multiple=True, negative_iterable=())
     ] = None,
     deployment_script_path: Optional[str] = None,
-    wait: bool = False,
+    wait: TaskWaitType = False,
     rpc_context: AuditHubContextType,
 ):
     """
@@ -112,8 +113,6 @@ def start_orca_task(
     deployment_script_path:
         An optional deployment script path to be used during deployment. If provided, it overrides the value set in project level.
 
-    wait:
-        If specified, this script will monitor the task and wait for it to finish. The exit code will reflect the success or failure of the task, regardless of findings produced by the analysis.
     """
 
     specs: list[VSpec] = []
