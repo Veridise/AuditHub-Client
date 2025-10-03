@@ -49,7 +49,8 @@ TaskIdType = Annotated[
 TaskWaitType = Annotated[
     bool,
     Parameter(
-        help="If specified, this script will monitor the task and wait for it to finish. The exit code will reflect the success or failure of the task, regardless of findings produced by the analysis."
+        negative_bool=(),
+        help="If specified, this script will monitor the task and wait for it to finish. The exit code will reflect the success or failure of the task, regardless of findings produced by the analysis.",
     ),
 ]
 
