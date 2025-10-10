@@ -73,7 +73,7 @@ def get_task_info(
                         exit_code = 2
                         print(
                             "Step",
-                            step.get("name"),
+                            step.get("code"),
                             "reported that it hit a timeout and could not complete its work",
                         )
 
