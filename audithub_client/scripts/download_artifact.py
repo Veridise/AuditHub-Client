@@ -76,7 +76,9 @@ def download_artifact(
                 bytes_written, hr_size = download_from_url(
                     matched_artifacts[0]["presigned_url"], output_file
                 )
-                logger.info(f"Downloaded {bytes_written} bytes ({hr_size}).")
+                logger.info(
+                    f"Downloaded {bytes_written} bytes ({hr_size}) as {output_file}."
+                )
                 found = True
                 break
             else:
