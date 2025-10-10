@@ -23,7 +23,7 @@ def get_task_artifact(
     rpc_context: AuditHubContextType,
 ):
     """
-    DownGet logs of a task's step.
+    Download a task's artifact, by its id.
 
     Parameters
     ----------

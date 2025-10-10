@@ -32,7 +32,7 @@ def get_access_token(
         "scope": "openid profile",
         "grant_type": "client_credentials",
     }
-    logger.debug("Payload is %s", payload)
+    # logger.debug("Payload is %s", payload)
     response = post(token_url, data=payload, timeout=AUTHENTICATION_TIMEOUT)
     if response.status_code != 200:
         raise RuntimeError(
@@ -40,7 +40,7 @@ def get_access_token(
         )
     token_data = response.json()
     end_time = time.perf_counter()
-    logger.debug(json.dumps(token_data, indent=4))
+    logger.debug(json.dumps(token_data))
     if token_time_listener:
         token_time_listener(end_time - begin_time)
     return token_data["access_token"]
