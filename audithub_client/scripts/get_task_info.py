@@ -5,6 +5,7 @@ from typing import Optional
 from ..api.get_task_info import GetTaskInfoArgs, api_get_task_info
 from ..library.invocation_common import (
     AuditHubContextType,
+    BooleanArg,
     OrganizationIdType,
     TaskIdType,
     app,
@@ -21,7 +22,8 @@ def get_task_info(
     organization_id: OrganizationIdType,
     task_id: TaskIdType,
     output: OutputType = "json",
-    verify: bool = False,
+    verify: BooleanArg = False,
+    check_completed: BooleanArg = False,
     rpc_context: AuditHubContextType,
 ):
     """
@@ -37,6 +39,9 @@ def get_task_info(
         If true, the findings counters are summed. If the sum if zero, the exit code is 0, otherwise it is 1.
         i.e., an exit code of 1 means there is at least one finding in one of the findings categories.
         This argument is independent of any output arguments.
+    check_completed:
+        If true, all steps that are "tools" are checked to see if they reported completed == false.
+        In such a case, we produce a 'timeout error' with an exit code of 2
     """
     try:
         rpc_input = GetTaskInfoArgs(organization_id=organization_id, task_id=task_id)
@@ -60,6 +65,18 @@ def get_task_info(
                         exit_code = 1
             if exit_code == 0:
                 print("No findings reported by this task, exiting with 0")
+        if exit_code == 0 and check_completed:
+            for step in task_info.get("steps", list()):
+                completed = step.get("completed_without_timeout", None)
+                if completed is not None:
+                    if not completed:
+                        exit_code = 2
+                        print(
+                            "Step",
+                            step.get("code"),
+                            "reported that it hit a timeout and could not complete its work",
+                        )
+
         logger.debug("Finished.")
         sys.exit(exit_code)
     except Exception as ex:

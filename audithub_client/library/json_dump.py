@@ -6,17 +6,18 @@ from cyclopts import Parameter
 from tabulate import tabulate
 
 OutputType = Annotated[
-    Literal["raw", "json", "json-pretty", "pprint", "list", "table"],
+    Literal["raw", "json", "json-pretty", "pprint", "list", "table", "none"],
     Parameter(
         help="""\
-The output format. Options are: 'raw': Python print(), 'json': single-line JSON, 'json-pretty': multi-line JSON, 'pprint': Python pprint(), 'list': list element per line, 'table': tabular view.
+The output format. Options are: 'raw': Python print(), 'json': single-line JSON, 'json-pretty': multi-line JSON, 'pprint': Python pprint(), 'list': list element per line, 'table': tabular view, 'none': omit output completely.
 """
     ),
 ]
 
 
 def dump_dict(document: Any, section: str | None = None, output: OutputType = "json"):
-
+    if output == "none":
+        return
     if section == "sections":
         document = sorted(document.keys())
     elif section:
