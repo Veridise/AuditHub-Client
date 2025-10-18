@@ -66,8 +66,8 @@ def api_start_vanguard_task(context: AuditHubContext, input: StartVanguardTaskAr
     if count_custom_detectors + count_detectors == 0:
         raise NoDetectorsDefinedError()
 
-    data = {
-        "name": input.name,
+    data = { "name": input.name } if input.name is not None else {}
+    data |= {
         "parameters": get_dict_of_fields_except(
             input, {"organization_id", "project_id", "version_id", "name", "tool_name"}
         ),

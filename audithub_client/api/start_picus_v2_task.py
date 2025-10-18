@@ -28,8 +28,8 @@ class StartPicusV2TaskArgs:
 def api_start_picus_v2_task(context: AuditHubContext, input: StartPicusV2TaskArgs):
     logger.debug("Starting Picus V2")
 
-    data = {
-        "name": input.name,
+    data = { "name": input.name } if input.name is not None else {}
+    data |= {
         "parameters": get_dict_of_fields_except(
             input, {"organization_id", "project_id", "version_id", "name"}
         ),

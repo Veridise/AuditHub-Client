@@ -122,8 +122,8 @@ def api_start_orca_task(
 ):
     logger.debug("Starting OrCa")
 
-    data = {
-        "name": input.name,
+    data = { "name": input.name } if input.name is not None else {}
+    data |= {
         "parameters": asdict(input.parameters),
         "specs_override": list([asdict(spec) for spec in input.specs]),
         "hints_override": (
