@@ -23,6 +23,7 @@ class StartPicusV2TaskArgs:
     solver_timeout: Optional[int] = None
     time_limit: Optional[int] = None
     assume_deterministic: Optional[list[str]] = None
+    enable_debug: Optional[bool] = None
 
 
 def api_start_picus_v2_task(context: AuditHubContext, input: StartPicusV2TaskArgs):

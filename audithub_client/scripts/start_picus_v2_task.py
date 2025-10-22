@@ -6,6 +6,7 @@ from ..api.monitor_task import MonitorTaskArgs, api_monitor_task
 from ..api.start_picus_v2_task import StartPicusV2TaskArgs, api_start_picus_v2_task
 from ..library.invocation_common import (
     AuditHubContextType,
+    BooleanArg,
     OrganizationIdType,
     ProjectIdType,
     TaskWaitType,
@@ -28,6 +29,7 @@ def start_picus_v2_task(
     solver_timeout: Optional[int] = None,
     time_limit: Optional[int] = None,
     assume_deterministic: Optional[list[str]] = None,
+    enable_debug: Optional[BooleanArg] = None,
     wait: TaskWaitType = False,
     rpc_context: AuditHubContextType,
 ):
@@ -61,6 +63,9 @@ def start_picus_v2_task(
         An optional list of modules inside the selected source file.
         Tells Picus to assume the list of modules provided are deterministic.
 
+    enable_debug:
+        Enable the Picus debug option
+
     """
     try:
         rpc_input = StartPicusV2TaskArgs(
@@ -73,6 +78,7 @@ def start_picus_v2_task(
             solver_timeout=solver_timeout,
             time_limit=time_limit,
             assume_deterministic=assume_deterministic,
+            enable_debug=enable_debug,
         )
         logger.debug("Starting...")
         logger.debug(str(input))
