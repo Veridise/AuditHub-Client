@@ -50,7 +50,7 @@ def start_picus_v2_task(
         cvc5-int is a fork of the finite field solver which supports mixed reasoning,
         multi-solver indicates using both cvc5 and cvc5-int,
         and z3 is the z3 integer solver.
-        Defaults to "vcv5-int" if no value is specified.
+        Defaults to "cvc5-int" if no value is specified.
 
     solver_timeout:
         Timeout set for each solver query, in milliseconds (default: 5000 ms).
