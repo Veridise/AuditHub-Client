@@ -112,11 +112,6 @@ def meta(
     # So let's treat it differently
     if command == app.help_print:
         return command(*bound.args, **bound.kwargs)
-    if base_url.startswith("https://audithub.local.veridise.tools"):
-        from .library.ssl import set_verify_ssl
-
-        # Set verify SSL flag to False, so that we can test against local deployments
-        set_verify_ssl(False)
 
     return command(
         *bound.args,

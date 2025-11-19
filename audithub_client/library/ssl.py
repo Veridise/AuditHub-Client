@@ -1,11 +1,9 @@
-verify_ssl = True
+EXCLUDED = ["https://audithub.local.veridise.tools"]
 
 
-def get_verify_ssl():
-    global verify_ssl
-    return verify_ssl
-
-
-def set_verify_ssl(value: bool):
-    global verify_ssl
-    verify_ssl = value
+def get_dynamic_verify_ssl(url: str):
+    global EXCLUDED
+    for excluded in EXCLUDED:
+        if url.startswith(excluded):
+            return False
+    return True
