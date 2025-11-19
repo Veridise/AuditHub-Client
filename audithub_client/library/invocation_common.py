@@ -1,6 +1,6 @@
 from typing import Annotated, Optional
 
-from cyclopts import App, Parameter
+from cyclopts import App, Group, Parameter
 
 from .context import AuditHubContext
 
@@ -13,8 +13,10 @@ This tool can be used in CI/CD pipelines to assist in verifying new versions of 
 """,
 )
 
+app.meta.group_parameters = Group("Global Parameters", sort_key=9)
 
-AuditHubContextType = Annotated[AuditHubContext, Parameter(parse=False)]
+
+AuditHubContextType = Annotated[AuditHubContext, Parameter(name="*")]
 
 OrganizationIdType = Annotated[
     int,
