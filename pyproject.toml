@@ -13,6 +13,7 @@ tabulate = "*"
 cyclopts = "*"
 humanize = "*"
 httpx = "*"
+pydantic = "*"
 
 
 [build-system]

@@ -13,6 +13,6 @@ def download_from_url(
     url: str, output_file: Path, timeout=DEFAULT_REQUEST_TIMEOUT
 ) -> Tuple[int, str]:
     """This is a `curl -o`/`wget -O` equivalent"""
-    with Client(timeout=timeout, verify=get_verify_ssl()) as client:
+    with Client(timeout=timeout, verify=get_verify_ssl(url)) as client:
         with client.stream("GET", url) as response:
             return download_file(response, output_file)

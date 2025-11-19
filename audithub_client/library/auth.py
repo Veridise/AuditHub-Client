@@ -66,7 +66,9 @@ def authentication_retry(
     if not hasattr(authentication_retry, "access_token"):
         # if not found, it is created
         authentication_retry.access_token = get_access_token(rpc_context, token_time_listener)  # type: ignore
-    with Client(timeout=request_timeout, verify=get_verify_ssl()) as client:
+    with Client(
+        timeout=request_timeout, verify=get_verify_ssl(kwargs["url"])
+    ) as client:
         while retries >= 0:
             if downloader:
                 with client.stream(
