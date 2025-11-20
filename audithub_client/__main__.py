@@ -6,7 +6,6 @@ from audithub_client.library.logging_level import set_logging_level
 
 from .library.invocation_common import app
 
-app.meta.group_parameters = Group("Global Parameters")
 from .scripts.create_version_via_local_archive import (  # noqa
     create_version_via_local_archive,
 )
@@ -29,6 +28,9 @@ from .scripts.start_vanguard_task import (  # noqa
     start_defi_vanguard_v2_task,
     start_zk_vanguard_task,
 )
+
+
+app.meta.group_parameters = Group("Global Parameters", sort_key=99)
 
 
 @app.meta.default

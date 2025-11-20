@@ -3,7 +3,7 @@ from typing import Annotated
 
 from cyclopts import Group, Parameter
 
-audithub_context_group = Group("AuditHub connection parameters", sort_key=0)
+audithub_context_group = Group("AuditHub connection parameters", sort_key=10)
 
 
 @dataclass
