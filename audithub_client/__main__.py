@@ -5,7 +5,6 @@ from cyclopts import Group, Parameter
 from audithub_client.library.logging_level import set_logging_level
 
 from .library.invocation_common import app
-
 from .scripts.create_version_via_local_archive import (  # noqa
     create_version_via_local_archive,
 )
@@ -21,6 +20,7 @@ from .scripts.get_task_logs import get_task_logs  # noqa
 from .scripts.get_users import get_users  # noqa
 from .scripts.get_version_archive import get_version_archive  # noqa
 from .scripts.monitor_task import monitor_task  # noqa
+from .scripts.qa_cleanup import qa_cleanup  # noqa
 from .scripts.start_orca_task import start_orca_task  # noqa
 from .scripts.start_picus_v2_task import start_picus_v2_task  # noqa
 from .scripts.start_vanguard_task import (  # noqa
@@ -28,7 +28,6 @@ from .scripts.start_vanguard_task import (  # noqa
     start_defi_vanguard_v2_task,
     start_zk_vanguard_task,
 )
-
 
 app.meta.group_parameters = Group("Global Parameters", sort_key=99)
 
