@@ -6,6 +6,8 @@ from typing import Literal
 from websockets import ConnectionClosedOK
 from websockets.sync.client import connect
 
+from audithub_client.library.ssl import get_websocket_ssl_context
+
 from ..library.auth import get_access_token, get_token_header
 from ..library.context import AuditHubContext
 
@@ -39,7 +41,9 @@ def api_monitor_task(context: AuditHubContext, input: MonitorTaskArgs) -> bool:
         f"{url}/organizations/{input.organization_id}/tasks/{input.task_id}/progress"
     )
     status: ALLOWED_STATUS_OPTIONS
-    with connect(endpoint, max_size=100 * 1024 * 1024) as websocket:
+    with connect(
+        endpoint, max_size=100 * 1024 * 1024, **get_websocket_ssl_context(url)
+    ) as websocket:
         try:
             # send initial authentication
             websocket.send(token)

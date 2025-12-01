@@ -7,11 +7,11 @@ from httpx import Client, Timeout, get, post
 
 from audithub_client.library.net_utils import Downloader
 
+from ..library.http import AUTHENTICATION_TIMEOUT, DEFAULT_REQUEST_TIMEOUT
 from .context import AuditHubContext
 from .http import Response
+from .ssl import get_verify_ssl
 
-AUTHENTICATION_TIMEOUT = Timeout(connect=10, read=30, write=30, pool=10)
-DEFAULT_REQUEST_TIMEOUT = Timeout(connect=10, read=90, write=600, pool=10)
 logger = logging.getLogger(__name__)
 
 
@@ -65,7 +65,9 @@ def authentication_retry(
     if not hasattr(authentication_retry, "access_token"):
         # if not found, it is created
         authentication_retry.access_token = get_access_token(rpc_context, token_time_listener)  # type: ignore
-    with Client(timeout=request_timeout) as client:
+    with Client(
+        timeout=request_timeout, verify=get_verify_ssl(kwargs["url"])
+    ) as client:
         while retries >= 0:
             if downloader:
                 with client.stream(
