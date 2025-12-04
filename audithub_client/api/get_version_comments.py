@@ -37,7 +37,7 @@ class CommentMessage:
 
 def api_get_version_comments(
     context: AuditHubContext, input: GetVersionCommentsArgs
-) -> list[CommentMessage]:
+) -> list[dict]:
 
     query_params = get_dict_of_fields_except(
         input, {"organization_id", "project_id", "version_id"}
