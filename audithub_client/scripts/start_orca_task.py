@@ -127,6 +127,10 @@ def start_orca_task(
             )
         )
 
+    if len(specs) == 0:
+        print("ERROR: You must specify at least one V Spec to start an OrCa task")
+        sys.exit(1)
+
     hints: list[Hint] = []
     for hint in embedded_hints or []:
         hints.append(HintFromVersion(relative_path=hint))
