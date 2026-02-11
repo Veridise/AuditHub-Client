@@ -61,6 +61,8 @@ def start_orca_task(
         Optional[list[str]], Parameter(consume_multiple=True, negative_iterable=())
     ] = None,
     deployment_script_path: Optional[str] = None,
+    on_chain: bool = False,
+    deployment_info_file: Optional[str] = None,
     wait: TaskWaitType = False,
     rpc_context: AuditHubContextType,
 ):
@@ -113,6 +115,11 @@ def start_orca_task(
     deployment_script_path:
         An optional deployment script path to be used during deployment. If provided, it overrides the value set in project level.
 
+    on_chain:
+        Specifies whether to enable on chain fuzzing.
+
+    deployment_info_file:
+        An optional relative path to the deployment info file inside the version archive. Its required when on_chain is True.
     """
 
     specs: list[VSpec] = []
@@ -143,6 +150,25 @@ def start_orca_task(
             )
         )
 
+    if on_chain:
+        if deployment_script_path is not None:
+            print(
+                "ERROR: You can only specify deployment_script_path when on_chain is False"
+            )
+            sys.exit(1)
+        if deployment_info_file is None:
+            print("ERROR: You must specify deployment_info_file when on_chain is True")
+            sys.exit(1)
+        if fork_network is None:
+            print("ERROR: You must specify fork_network when on_chain is True")
+            sys.exit(1)
+    else:
+        if deployment_info_file is not None:
+            print(
+                "ERROR: You can only specify deployment_info_file when on_chain is True"
+            )
+            sys.exit(1)
+
     if fork_block_number is not None and fork_network is None:
         print(
             "ERROR: You can only specify a fork block number when also specifying a fork network"
@@ -167,6 +193,8 @@ def start_orca_task(
             specs=specs,
             hints=hints,
             deployment_script_path_override=deployment_script_path,
+            on_chain=on_chain,
+            deployment_info_file=deployment_info_file,
         )
         logger.debug("Starting...")
         logger.debug(str(input))

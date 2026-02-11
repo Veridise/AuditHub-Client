@@ -114,6 +114,8 @@ class StartOrCaTaskArgs:
     specs: list[VSpec]
     hints: Optional[list[Hint]]
     deployment_script_path_override: Optional[str]
+    on_chain: bool
+    deployment_info_file: Optional[str]
 
 
 def api_start_orca_task(
@@ -130,6 +132,8 @@ def api_start_orca_task(
             list([asdict(hint) for hint in input.hints]) if input.hints else None
         ),
         "deployment_script_path_override": input.deployment_script_path_override,
+        "on_chain": input.on_chain,
+        "deployment_info_file": input.deployment_info_file,
     }
     logger.debug("Posting data: %s", data)
 
