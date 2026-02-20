@@ -19,6 +19,7 @@ from ..api.start_orca_task import (
 )
 from ..library.invocation_common import (
     AuditHubContextType,
+    BooleanArg,
     OrganizationIdType,
     ProjectIdType,
     TaskWaitType,
@@ -61,7 +62,7 @@ def start_orca_task(
         Optional[list[str]], Parameter(consume_multiple=True, negative_iterable=())
     ] = None,
     deployment_script_path: Optional[str] = None,
-    on_chain: bool = False,
+    on_chain: BooleanArg = False,
     deployment_info_file: Optional[str] = None,
     wait: TaskWaitType = False,
     rpc_context: AuditHubContextType,
