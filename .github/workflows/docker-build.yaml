@@ -44,7 +44,7 @@ jobs:
         env:
           # if primary fails, this will use ghcr.io as the primary and public.ecr.aws then.
           TRIVY_DB_REPOSITORY: ghcr.io/aquasecurity/trivy-db,public.ecr.aws/aquasecurity/trivy-db
-        uses: aquasecurity/trivy-action@0.32.0
+        uses: aquasecurity/trivy-action@0.34.1
         with:
           image-ref: "veridise/audithub-client:${{ env.IMAGE_TAG }}"
           format: "table"
