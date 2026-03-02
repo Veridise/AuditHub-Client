@@ -25,7 +25,9 @@ def start_picus_v2_task(
     project_id: ProjectIdType,
     version_id: VersionIdType,
     name: Optional[str] = None,
-    solver: Optional[Literal["cvc5", "cvc5-ff-int", "z3", "multi-solver"]] = None,
+    solver: Optional[
+        Literal["cvc5", "cvc5-ff-int", "z3", "multi-solver", "z3bv", "bitwuzla"]
+    ] = None,
     solver_timeout: Optional[int] = None,
     time_limit: Optional[int] = None,
     assume_deterministic: Optional[list[str]] = None,
@@ -49,7 +51,9 @@ def start_picus_v2_task(
         cvc5 indicates the finite field solver,
         cvc5-ff-int is a fork of the finite field solver which supports mixed reasoning,
         multi-solver indicates using both cvc5 and cvc5-ff-int,
-        and z3 is the z3 integer solver.
+        and z3 is the z3 integer solver,
+        bitwuzla is a bitvector solver,
+        z3bv is the z3 bitvector solver.
 
     solver_timeout:
         Timeout set for each solver query, in milliseconds (default: 5000 ms).
