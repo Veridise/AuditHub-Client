@@ -170,8 +170,8 @@ def start_vanguard_common(
         logger.error("Error %s", str(ex), exc_info=ex)
 
 
-@app.command
-def start_defi_vanguard_v2_task(
+@app.command(alias=["start-defi-vanguard-v2-task"])
+def start_defi_vanguard_task(
     *,
     organization_id: OrganizationIdType,
     project_id: ProjectIdType,
