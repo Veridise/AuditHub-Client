@@ -25,7 +25,6 @@ from .scripts.start_orca_task import start_orca_task  # noqa
 from .scripts.start_picus_v2_task import start_picus_v2_task  # noqa
 from .scripts.start_vanguard_task import (  # noqa
     start_defi_vanguard_task,
-    start_defi_vanguard_v2_task,
     start_zk_vanguard_task,
 )
 

@@ -27,17 +27,6 @@ from ..library.invocation_common import (
 logger = logging.getLogger(__name__)
 
 
-DefiDetectorType = Annotated[
-    list[str],
-    Parameter(
-        validator=lambda _t, v: len(v) > 0,
-        consume_multiple=True,
-        negative_iterable=(),
-        help="One or more detector(s) to use for analyzing the sources. For a list of valid detector names, please run `ah get-configuration vanguard_defi_detectors`.",
-    ),
-]
-
-
 DefiV2DetectorType = Annotated[
     list[str],
     Parameter(
@@ -181,37 +170,8 @@ def start_vanguard_common(
         logger.error("Error %s", str(ex), exc_info=ex)
 
 
-@app.command
+@app.command(alias=["start-defi-vanguard-v2-task"])
 def start_defi_vanguard_task(
-    *,
-    organization_id: OrganizationIdType,
-    project_id: ProjectIdType,
-    version_id: VersionIdType,
-    name: TaskNameType = None,
-    detector: DefiDetectorType,
-    input_limit: DefiInputLimitType = None,
-    wait: TaskWaitType = False,
-    rpc_context: AuditHubContextType,
-):
-    """
-    Start a DeFi Vanguard (static analysis) task for a specific version of a project. Outputs the task id.
-
-    """
-    start_vanguard_common(
-        organization_id=organization_id,
-        project_id=project_id,
-        version_id=version_id,
-        name=name,
-        detector=detector,
-        input_limit=input_limit,
-        wait=wait,
-        rpc_context=rpc_context,
-        tool_name="vanguard",
-    )
-
-
-@app.command
-def start_defi_vanguard_v2_task(
     *,
     organization_id: OrganizationIdType,
     project_id: ProjectIdType,
