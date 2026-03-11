@@ -52,6 +52,7 @@ class StartVanguardTaskArgs:
     name: Optional[str]
     detector: list[str]
     custom_detectors: Optional[CustomDetectorsForTask]
+    cross_version_triage: Optional[bool]
 
     input_limit: Optional[list[str]]
     tool_name: Literal["vanguard", "vanguard-v2", "zk-vanguard"]

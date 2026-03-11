@@ -63,4 +63,11 @@ TaskNameType = Annotated[
     ),
 ]
 
+CrossVersionTriageType = Annotated[
+    Optional[bool],
+    Parameter(
+        help="When enabled, findings previously discovered for this project will be suppressed."
+    ),
+]
+
 BooleanArg = Annotated[bool, Parameter(negative_bool=())]
