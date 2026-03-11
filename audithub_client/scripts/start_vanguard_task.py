@@ -16,6 +16,7 @@ from ..api.start_vanguard_task import (
 )
 from ..library.invocation_common import (
     AuditHubContextType,
+    CrossVersionTriageType,
     OrganizationIdType,
     ProjectIdType,
     TaskNameType,
@@ -111,7 +112,7 @@ ZKInputLimitType = Annotated[
 ]
 
 supported_detectors_keys = {
-    "vanguard": "vanguard_defi_detectors",
+    "vanguard": "vanguard_v2_defi_detectors",
     "vanguard-v2": "vanguard_v2_defi_detectors",
     "zk-vanguard": "vanguard_zk_detectors",
 }
@@ -126,6 +127,7 @@ def start_vanguard_common(
     detector: list[str],
     custom_detectors: Optional[CustomDetectorsForTask] = None,
     input_limit: Optional[list[str]],
+    cross_version_triage: Optional[bool] = None,
     wait: bool = False,
     rpc_context: AuditHubContextType,
     tool_name: Literal["vanguard", "vanguard-v2", "zk-vanguard"],
@@ -149,6 +151,7 @@ def start_vanguard_common(
             custom_detectors=custom_detectors,
             input_limit=input_limit,
             tool_name=tool_name,
+            cross_version_triage=cross_version_triage,
         )
         logger.debug("Starting...")
         logger.debug(str(rpc_input))
@@ -177,6 +180,7 @@ def start_defi_vanguard_task(
     project_id: ProjectIdType,
     version_id: VersionIdType,
     name: TaskNameType = None,
+    cross_version_triage: CrossVersionTriageType = False,
     detector: DefiV2DetectorType = list(),
     embedded_custom_detectors: DefiV2CustomDetectorFromVersionType = list(),
     std_lib_custom_detectors: DefiV2CustomDetectorFromStandardLibraryType = list(),
@@ -212,6 +216,7 @@ def start_defi_vanguard_task(
         wait=wait,
         rpc_context=rpc_context,
         tool_name="vanguard-v2",
+        cross_version_triage=cross_version_triage,
     )
 
 
