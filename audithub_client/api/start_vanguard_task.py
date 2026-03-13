@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import logging
 from dataclasses import dataclass
-from typing import Literal, Optional
+from typing import Any, Literal, Optional
 
 from ..library.auth import authentication_retry
 from ..library.context import AuditHubContext
@@ -67,8 +67,8 @@ def api_start_vanguard_task(context: AuditHubContext, input: StartVanguardTaskAr
     if count_custom_detectors + count_detectors == 0:
         raise NoDetectorsDefinedError()
 
-    data = {
-        "name": input.name,
+    data: dict[Any, Any] = { "name": input.name } if input.name is not None else {}
+    data |= {
         "parameters": get_dict_of_fields_except(
             input, {"organization_id", "project_id", "version_id", "name", "tool_name"}
         ),

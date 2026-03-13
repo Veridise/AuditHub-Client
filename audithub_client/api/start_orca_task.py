@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import logging
 from dataclasses import asdict, dataclass
-from typing import Literal, Optional
+from typing import Any, Literal, Optional
 
 from ..library.auth import authentication_retry
 from ..library.context import AuditHubContext
@@ -124,8 +124,8 @@ def api_start_orca_task(
 ):
     logger.debug("Starting OrCa")
 
-    data = {
-        "name": input.name,
+    data: dict[Any, Any] = { "name": input.name } if input.name is not None else {}
+    data |= {
         "parameters": asdict(input.parameters),
         "specs_override": list([asdict(spec) for spec in input.specs]),
         "hints_override": (
