@@ -10,4 +10,8 @@ This CLI must NEVER give access to any admin APIs.
 
 Always ensure the following:
 1. New code is consistent with existing code conventions.
-2. Run `mypy .` on the root of the repo and ensure there are no type errors.
+2. Ensure that `make check` runs with no errors.
+
+PR Review guidelines:
+1. Cross-reference all API calls made by the CLI with the production API mentioned above.
+2. Flag any places with missing data validation on user inputs.
