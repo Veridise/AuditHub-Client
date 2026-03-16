@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import logging
 from dataclasses import dataclass
-from typing import Any, Optional
+from typing import Optional
 
 from ..library.auth import authentication_retry
 from ..library.context import AuditHubContext
@@ -30,7 +30,7 @@ class StartPicusV2TaskArgs:
 def api_start_picus_v2_task(context: AuditHubContext, input: StartPicusV2TaskArgs):
     logger.debug("Starting Picus V2")
 
-    data: dict[Any, Any] = { "name": input.name } if input.name is not None else {}
+    data = { "name": input.name } if input.name is not None else {}
     data |= {
         "parameters": get_dict_of_fields_except(
             input, {"organization_id", "project_id", "version_id", "name"}
