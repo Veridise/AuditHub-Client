@@ -7,11 +7,9 @@ from tabulate import tabulate
 
 OutputType = Annotated[
     Literal["raw", "json", "json-pretty", "pprint", "list", "table", "none"],
-    Parameter(
-        help="""\
+    Parameter(help="""\
 The output format. Options are: 'raw': Python print(), 'json': single-line JSON, 'json-pretty': multi-line JSON, 'pprint': Python pprint(), 'list': list element per line, 'table': tabular view, 'none': omit output completely.
-"""
-    ),
+"""),
 ]
 
 

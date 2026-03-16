@@ -26,6 +26,8 @@ isort = "*"
 ruff = "*"
 mypy = "*"
 types-tabulate = "*"
+pre-commit = "*"
+pre-commit-hooks = "*"
 
 [tool.isort]
 profile = "black"

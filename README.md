@@ -1,9 +1,14 @@
 This is the AuditHub client, a Python module that allows programmatic access to Veridise AuditHub via its REST API.
 
 # Installing
+- To install the CLI as a package, use a package manager such as `pip install audithub-client`
+
+# Developing
 - Allocate and activate a venv, e.g., `python -m venv .venv && source .venv/bin/activate`
 - Make sure you have `poetry` installed. If it cannot be found globally, you can install it in the local venv with `pip install poetry`
 - Run `poetry install`
+- If you are developing on top of this repository, install the git hooks with `poetry run pre-commit install`
+- If you are developing on top of this repository, you can run the hooks manually across the repository with `poetry run pre-commit run --all-files`
 
 # Configuring
 All commands support configuration via command line arguments. Additionally, some arguments can also be specified as environment variables.
@@ -15,19 +20,19 @@ The required arguments for any API call are the following (the name inside the p
   - `dev`: https://keycloak.dev.veridise.tools/auth/realms/veridise/.well-known/openid-configuration
   - `production`: https://sso.veridise.com/auth/realms/veridise/.well-known/openid-configuration
 - `--oidc-client-id` (`AUDITHUB_OIDC_CLIENT_ID`): The OIDC client id (to be supplied by Veridise upon request)
-- `--oidc-client-secret` (`AUDITHUB_OIDC_CLIENT_SECRET`): The OIDC client secret (to be supplied by Veridise upon request). 
+- `--oidc-client-secret` (`AUDITHUB_OIDC_CLIENT_SECRET`): The OIDC client secret (to be supplied by Veridise upon request).
 
 Note: use `ah --help` to see the global arguments, applicable to all commands.
-Note: any logging output produced by the `ah` script is directed to stderr, so that output 
+Note: any logging output produced by the `ah` script is directed to stderr, so that output
 
 **Important**: please note that the `client_id` and `client_secret` pair should be considered sensitive information, as anyone with access to these can trigger AuditHub actions that account towards the usage limits of the organization that was issued these credentials.
 
-We suggest to set these arguments in the environment for ease of use. 
-One approach is to use [direnv](https://direnv.net), for which we provide two sample files: `envrc-sample-dev` and `envrc-sample-production`. 
+We suggest to set these arguments in the environment for ease of use.
+One approach is to use [direnv](https://direnv.net), for which we provide two sample files: `envrc-sample-dev` and `envrc-sample-production`.
 If you would like to use this utility, copy one of the samples corresponding to your target environment as `.envrc`, edit `.envrc` to fill in your credentials, and you can then use the below command line utilities.
 
 # Command line usage
-We offer a global `ah` script, that offers commands that make API calls. 
+We offer a global `ah` script, that offers commands that make API calls.
 Use `ah --help` to list all supported commands, as well as the global options that apply to all commands.
 To get help for a specific command, use `ah command --help`. For example: `ah get-task-info --help`.
 
@@ -48,7 +53,7 @@ This should output information about your user profile in AuditHub, and can help
 
 
 # API Usage
-If you would like to use this module as a library, utilized by your own Python code, you can import the corresponding function from the API call you are interested in. 
+If you would like to use this module as a library, utilized by your own Python code, you can import the corresponding function from the API call you are interested in.
 e.g., to invoke the `get_my_profile` function programmatically, you can do the following:
 ```python
 from audithub_client.api.get_my_profile import api_get_my_profile
@@ -57,16 +62,16 @@ from os import getenv
 
 # Fill in the corresponding values below
 rpc_context = AuditHubContext(
-    base_url=getenv("AUDITHUB_BASE_URL"), 
-    oidc_configuration_url=getenv("AUDITHUB_OIDC_CONFIGURATION_URL"), 
-    oidc_client_id=getenv("AUDITHUB_OIDC_CLIENT_ID"), 
+    base_url=getenv("AUDITHUB_BASE_URL"),
+    oidc_configuration_url=getenv("AUDITHUB_OIDC_CONFIGURATION_URL"),
+    oidc_client_id=getenv("AUDITHUB_OIDC_CLIENT_ID"),
     oidc_client_secret=getenv("AUDITHUB_OIDC_CLIENT_SECRET")
 )
 print(api_get_my_profile(rpc_context))
 ```
 
 # Script reference
-For a current script reference, please use `ah --help`. 
+For a current script reference, please use `ah --help`.
 Some interesting commands are the following:
   - `create-version-via-local-archive`  Create a new version for a project by uploading a local .zip archive, or creating one on the fly from a local folder.
   - `create-version-via-url`            Create a new version for a project by asking AuditHub to either download an archive or clone a Git repository.
@@ -120,4 +125,4 @@ Use `make image-versioned` to build an image tagger with both `latest` and the c
 Finally, use `make push` to push latest and `make push-versioned` to push the image tagger with the current version.
 
 As a side note, for `docker build --platform=linux/amd64,linux/arm64 ...` to work, the machine's container runtime needs to support multi-platform builds. Specifically for Docker, this requires switching from the "classic" image store to the containerd image store as outlined [here](https://docs.docker.com/build/building/multi-platform/).
-For Docker Desktop, you can set the "Use containerd for pulling and storing images" option in the user interface as described [here](https://docs.docker.com/desktop/features/containerd/). 
+For Docker Desktop, you can set the "Use containerd for pulling and storing images" option in the user interface as described [here](https://docs.docker.com/desktop/features/containerd/).
