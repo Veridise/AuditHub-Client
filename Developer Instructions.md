@@ -4,7 +4,7 @@ See [README.md](README.md) for installation.
 # Introducing a new API call.
 > **_NOTE:_** we will use `get_task_info` as an example below.
 
-1. Add a new file at `audithub_client/api`, implementing the rpc. Use the convention `api_...` for naming the RPC function. Make the function accept at most two arguments. 
+1. Add a new file at `audithub_client/api`, implementing the rpc. Use the convention `api_...` for naming the RPC function. Make the function accept at most two arguments.
     1. The first should be an AuditHubContext, with the needed information to contact AuditHub successfully.
     2. The second, if required, should be a data class encapsulating all the RPC parameters (both URL and body)
 
@@ -13,7 +13,7 @@ See [README.md](README.md) for installation.
     GetTaskInfoArgs:
         organization_id: int
         task_id: int
-    ``` 
+    ```
     and then implement the API function:
     ```Python
     def api_get_task_info(context: AuditHubContext, input: GetTaskInfoArgs):

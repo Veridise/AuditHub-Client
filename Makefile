@@ -11,35 +11,35 @@ check: black isort ruff mypy
 
 .PHONY:black
 black:
-	black --check $(MODULE)
+	poetry run black --check $(MODULE)
 
 .PHONY:black-fix
 black-fix:
-	black $(MODULE)
+	poetry run black $(MODULE)
 
 .PHONY:isort
 isort:
-	isort --check $(MODULE)
+	poetry run isort --check $(MODULE)
 
 .PHONY:isort-fix
 isort-fix:
-	isort $(MODULE)
+	poetry run isort $(MODULE)
 
 .PHONY:mypy
 mypy:
-	mypy $(MODULE)
+	poetry run mypy $(MODULE)
 
 .PHONY:ruff
 ruff:
-	ruff check $(MODULE)
+	poetry run ruff check $(MODULE)
 
 .PHONY:ruff-fix
 ruff-fix:
-	ruff check --fix $(MODULE)
+	poetry run ruff check --fix $(MODULE)
 
 .PHONY: mypy-types
 mypy-types:
-	mypy --install-types --non-interactive
+	poetry run mypy --install-types --non-interactive
 
 .PHONY: fix
 fix: isort-fix black-fix ruff-fix
@@ -69,10 +69,10 @@ release: image-versioned image push-versioned push
 	@echo "Release $(shell poetry version -s) done"
 
 .PHONY: tag
-tag: 
+tag:
 	git tag v$(shell poetry version -s)
 
 
 .PHONY: push-tag
-push-tag: 
+push-tag:
 	git push --tags

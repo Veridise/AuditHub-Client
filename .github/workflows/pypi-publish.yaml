@@ -14,26 +14,26 @@ jobs:
     - uses: actions/checkout@v4
       with:
         persist-credentials: false
-        fetch-depth: 0  
-    
+        fetch-depth: 0
+
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: "3.12" 
-    
+        python-version: "3.12"
+
     - name: Install Poetry
       uses: snok/install-poetry@v1
       with:
         version: latest
         virtualenvs-create: true
         virtualenvs-in-project: true
-    
+
     - name: Install dependencies
       run: poetry install --no-interaction --no-root
-    
+
     - name: Build distribution packages
       run: poetry build
-    
+
     - name: Store the distribution packages
       uses: actions/upload-artifact@v4
       with:
@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/audithub-client	  
+      url: "https://pypi.org/p/audithub-client"
     permissions:
       id-token: write
 

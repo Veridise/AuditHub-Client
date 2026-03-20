@@ -6,10 +6,10 @@ from .context import AuditHubContext
 
 app = App(
     help="""\
-This is the Veridise AuditHub CLI client, that allows access to AuditHub via its REST API. 
-When you have Veridise AuditHub credentials, you can use this tool to, 
+This is the Veridise AuditHub CLI client, that allows access to AuditHub via its REST API.
+When you have Veridise AuditHub credentials, you can use this tool to,
 e.g., create new versions for projects, launch Veridise tools, monitor their progress, and obtain the results.
-This tool can be used in CI/CD pipelines to assist in verifying new versions of projects. 
+This tool can be used in CI/CD pipelines to assist in verifying new versions of projects.
 """,
 )
 
