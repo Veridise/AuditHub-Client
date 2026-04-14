@@ -49,6 +49,7 @@ def start_orca_task(
     ] = None,
     fork_network: Optional[str] = None,
     fork_block_number: Optional[int] = None,
+    auxiliary_deployment_script: Optional[str] = None,
     embedded_specs: Annotated[
         Optional[list[str]], Parameter(consume_multiple=True, negative_iterable=())
     ] = None,
@@ -115,6 +116,9 @@ def start_orca_task(
 
     deployment_script_path:
         An optional deployment script path to be used during deployment. If provided, it overrides the value set in project level.
+
+    auxiliary_deployment_script:
+        An optional deployment script path to be used during deployment for on chain fuzzing.
 
     on_chain:
         Specifies whether to enable on chain fuzzing.
@@ -196,6 +200,7 @@ def start_orca_task(
             deployment_script_path_override=deployment_script_path,
             on_chain=on_chain,
             deployment_info_file=deployment_info_file,
+            auxiliary_deployment_script=auxiliary_deployment_script,
         )
         logger.debug("Starting...")
         logger.debug(str(input))

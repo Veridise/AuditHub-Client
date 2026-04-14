@@ -114,6 +114,7 @@ class StartOrCaTaskArgs:
     specs: list[VSpec]
     hints: Optional[list[Hint]]
     deployment_script_path_override: Optional[str]
+    auxiliary_deployment_script: Optional[str]
     on_chain: bool
     deployment_info_file: Optional[str]
 
@@ -134,9 +135,9 @@ def api_start_orca_task(
         "deployment_script_path_override": input.deployment_script_path_override,
         "on_chain": input.on_chain,
         "deployment_info_file": input.deployment_info_file,
+        "auxiliary_deployment_script": input.auxiliary_deployment_script,
     }
     logger.debug("Posting data: %s", data)
-
     response = authentication_retry(
         context,
         POST,
