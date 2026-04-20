@@ -76,3 +76,8 @@ tag:
 .PHONY: push-tag
 push-tag:
 	git push --tags
+
+
+.PHONY: pre-commit-hooks
+pre-commit-hooks:
+	poetry run pre-commit run --all-files
