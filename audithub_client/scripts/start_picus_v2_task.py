@@ -29,7 +29,7 @@ def start_picus_v2_task(
         Literal["cvc5", "cvc5-ff-int", "z3", "multi-solver", "z3bv", "bitwuzla"]
     ] = None,
     solver_timeout: Optional[int] = None,
-    time_limit: Optional[int] = None,
+    time_limit: int = 1800000,
     assume_deterministic: Optional[list[str]] = None,
     enable_debug: Optional[BooleanArg] = None,
     wait: TaskWaitType = False,
@@ -56,11 +56,11 @@ def start_picus_v2_task(
         z3bv is the z3 bitvector solver.
 
     solver_timeout:
-        Timeout set for each solver query, in milliseconds (default: 5000 ms).
+        Timeout set for each solver query, in milliseconds (If not provided, default is 5 seconds).
 
     time_limit:
         Global timeout. If Picus takes longer than the time_limit provided then it will terminate.
-        Value in milliseconds (default: unlimited).
+        Value in milliseconds (if set to 0, it means unlimited).
 
     assume_deterministic:
         An optional list of modules inside the selected source file.
@@ -79,7 +79,7 @@ def start_picus_v2_task(
             source=source,
             solver=solver,
             solver_timeout=solver_timeout,
-            time_limit=time_limit,
+            time_limit=None if time_limit == 0 else time_limit,
             assume_deterministic=assume_deterministic,
             enable_debug=enable_debug,
         )
