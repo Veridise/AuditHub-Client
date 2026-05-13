@@ -1,0 +1,32 @@
+name: AuditHub Client Tests
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  dispatch-private-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger AuditHub client tests
+        env:
+          GH_TOKEN: ${{ secrets.AUDITHUB_TESTS_DISPATCH_TOKEN }}
+          CLIENT_REF: ${{ github.event.pull_request.head.sha || github.ref }}
+
+        run: |
+          RUN_URL=$(gh workflow run audithub-client-tests.yml \
+            --repo Veridise/AuditHub-Client-tests \
+            --ref main \
+            -f environment=dev \
+            -f workers=8 \
+            -f client_ref="$CLIENT_REF")
+
+          echo "Triggered private workflow: $RUN_URL"
+
+          RUN_ID="${RUN_URL##*/}"
+
+          gh run watch "$RUN_ID" \
+            --repo Veridise/AuditHub-Client-tests \
+            --interval 30 \
+            --compact \
+            --exit-status
