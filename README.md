@@ -1,5 +1,6 @@
 This is the AuditHub client, a Python module that allows programmatic access to Veridise AuditHub via its REST API.
 
+
 # Installing
 - To install the CLI as a package, use a package manager such as `pip install audithub-client`
 
