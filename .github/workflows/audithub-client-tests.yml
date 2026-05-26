@@ -18,7 +18,6 @@ jobs:
             --repo Veridise/AuditHub-Client-tests \
             --ref main \
             -f environment=dev \
-            -f workers=8 \
             -f client_ref="$CLIENT_REF")
 
           echo "Triggered private workflow: $RUN_URL"
