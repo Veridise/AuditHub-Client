@@ -39,10 +39,8 @@ def add_folder_to_zip(
         if current_root.name in excluded_directories:
             continue
         if any(
-            map(
-                lambda p: str(p) in excluded_directories,
-                current_root.relative_to(source_folder).parents,
-            )
+            str(p) in excluded_directories
+            for p in current_root.relative_to(source_folder).parents
         ):
             continue
         for file_name in files:

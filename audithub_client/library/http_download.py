@@ -1,5 +1,4 @@
 from pathlib import Path
-from typing import Tuple
 
 from httpx import Client
 
@@ -11,7 +10,7 @@ from .ssl import get_verify_ssl
 
 def download_from_url(
     url: str, output_file: Path, timeout=DEFAULT_REQUEST_TIMEOUT
-) -> Tuple[int, str]:
+) -> tuple[int, str]:
     """This is a `curl -o`/`wget -O` equivalent"""
     with Client(timeout=timeout, verify=get_verify_ssl(url)) as client:
         with client.stream("GET", url) as response:

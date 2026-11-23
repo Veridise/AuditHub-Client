@@ -135,9 +135,9 @@ def start_vanguard_common(
     try:
         configuration = api_get_configuration(rpc_context)
 
-        supported_detectors = set(
-            [e["code"] for e in configuration[supported_detectors_keys[tool_name]]]
-        )
+        supported_detectors = {
+            e["code"] for e in configuration[supported_detectors_keys[tool_name]]
+        }
         for d in detector:
             if d not in supported_detectors:
                 raise ValueError(f"'{d}' is not a valid detector name.")
@@ -181,10 +181,10 @@ def start_defi_vanguard_task(
     version_id: VersionIdType,
     name: TaskNameType = None,
     cross_version_triage: CrossVersionTriageType = False,
-    detector: DefiV2DetectorType = list(),
-    embedded_custom_detectors: DefiV2CustomDetectorFromVersionType = list(),
-    std_lib_custom_detectors: DefiV2CustomDetectorFromStandardLibraryType = list(),
-    org_lib_custom_detectors: DefiV2CustomDetectorFromOrganizationLibraryType = list(),
+    detector: DefiV2DetectorType = [],
+    embedded_custom_detectors: DefiV2CustomDetectorFromVersionType = [],
+    std_lib_custom_detectors: DefiV2CustomDetectorFromStandardLibraryType = [],
+    org_lib_custom_detectors: DefiV2CustomDetectorFromOrganizationLibraryType = [],
     input_limit: DefiInputLimitType = None,
     wait: TaskWaitType = False,
     rpc_context: AuditHubContextType,

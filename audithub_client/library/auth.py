@@ -1,7 +1,8 @@
 import json
 import logging
 import time
-from typing import Callable, Optional
+from collections.abc import Callable
+from typing import Optional
 
 from httpx import Client, Timeout, get, post
 

@@ -1,6 +1,5 @@
 from json import JSONDecodeError
 from pathlib import Path
-from typing import Tuple
 
 from humanize import naturalsize
 
@@ -26,7 +25,7 @@ def response_json(response: Response):
         ) from None
 
 
-def download_file(response: Response, output_file: Path) -> Tuple[int, str]:
+def download_file(response: Response, output_file: Path) -> tuple[int, str]:
     bytes_written = 0
     with output_file.open("wb") as f:
         for chunk in response.iter_bytes(chunk_size=8192):

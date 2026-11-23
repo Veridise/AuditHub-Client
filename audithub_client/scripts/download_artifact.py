@@ -63,7 +63,7 @@ def download_artifact(
             )
             matched_artifacts = [
                 e
-                for e in task_info.get("artifacts", list())
+                for e in task_info.get("artifacts", [])
                 if e.get("step_code") == step_code and e.get("name") == name
             ]
             if len(matched_artifacts) > 1:

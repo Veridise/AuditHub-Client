@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from dataclasses import dataclass
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from typing import Optional
 
 from ..library.auth import authentication_retry
@@ -16,7 +16,7 @@ class SendDigestNotificationsArgs:
 
 
 def get_query_timestamp(days_to_include: int):
-    return (datetime.now(timezone.utc) - timedelta(days=days_to_include)).isoformat()
+    return (datetime.now(UTC) - timedelta(days=days_to_include)).isoformat()
 
 
 def api_send_digest_notifications(

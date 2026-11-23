@@ -33,6 +33,16 @@ pre-commit-hooks = "*"
 profile = "black"
 src_paths = ["audithub_client"]
 
+[tool.ruff.lint]
+extend-ignore = [
+    "PLC0414", # Import alias is identical to the original name.
+    "B006", # Mutable data structures used as argument defaults.
+    "PLW0602", # Global variable declared without assignment in the function.
+    "SIM117", # Nested with statements that can be combined into one.
+    "EXE001", # Shebang is present but the file is not executable.
+    "UP045", # Replace Optional[X] annotations with X | None.
+]
+
 
 [tool.poetry.scripts]
 ah = "audithub_client.__main__:main"

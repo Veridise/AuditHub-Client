@@ -66,16 +66,15 @@ def get_task_info(
             if exit_code == 0:
                 print("No findings reported by this task, exiting with 0")
         if exit_code == 0 and check_completed:
-            for step in task_info.get("steps", list()):
+            for step in task_info.get("steps", []):
                 completed = step.get("completed_without_timeout", None)
-                if completed is not None:
-                    if not completed:
-                        exit_code = 2
-                        print(
-                            "Step",
-                            step.get("code"),
-                            "reported that it hit a timeout and could not complete its work",
-                        )
+                if completed is not None and not completed:
+                    exit_code = 2
+                    print(
+                        "Step",
+                        step.get("code"),
+                        "reported that it hit a timeout and could not complete its work",
+                    )
 
         logger.debug("Finished.")
         sys.exit(exit_code)
