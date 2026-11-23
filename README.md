@@ -80,6 +80,7 @@ Some interesting commands are the following:
   - `monitor-task`                      Monitor a task's progress. Will exit with an exit status of 1 if the task did not complete successfully.
   - `start-defi-vanguard-task`          Start a Vanguard (static analysis) task for a specific version of a project.
   - `start-picus-v2-task`               Start a Picus V2 (Rust version) task for a module of a specific version of a project.
+  - `start-scout-task` Start a Scout scan for a specific version of a project.
 
 > **Note:** all `ah start-...` commands support a `--wait` option that automatically invokes `ah monitor-task` on the newly started task, to wait for it to finish and exit with 0 on success or non-zero on failure.
 
