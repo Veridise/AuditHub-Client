@@ -59,6 +59,8 @@ def decode_std_lib_custom_detector_from_string(e: str):
 
 
 def validate_std_lib_custom_detector(_t, v):
+    if v is None:
+        return True
     for e in v:
         decode_std_lib_custom_detector_from_string(e)
     return True
