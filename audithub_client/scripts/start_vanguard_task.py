@@ -91,7 +91,7 @@ ZKDetectorType = Annotated[
         validator=lambda _t, v: len(v) > 0,
         consume_multiple=True,
         negative_iterable=(),
-        help="One or more detector(s) to use for analyzing the sources. For a list of valid detector names, please run `ah get-configuration vanguard_zk_detectors`.",
+        help="One or more detector(s) to use for analyzing the sources. For a list of valid detector names, please run `ah get-configuration vanguard_v2_zk_detectors`.",
     ),
 ]
 
@@ -107,14 +107,14 @@ ZKInputLimitType = Annotated[
     str,
     Parameter(
         negative_iterable=(),
-        help="A circom source file to process.",
+        help="An LLZK source file to process.",
     ),
 ]
 
 supported_detectors_keys = {
     "vanguard": "vanguard_v2_defi_detectors",
     "vanguard-v2": "vanguard_v2_defi_detectors",
-    "zk-vanguard": "vanguard_zk_detectors",
+    "zk-vanguard-v2": "vanguard_v2_zk_detectors",
 }
 
 
@@ -130,7 +130,7 @@ def start_vanguard_common(
     cross_version_triage: Optional[bool] = None,
     wait: bool = False,
     rpc_context: AuditHubContextType,
-    tool_name: Literal["vanguard", "vanguard-v2", "zk-vanguard"],
+    tool_name: Literal["vanguard", "vanguard-v2", "zk-vanguard-v2"],
 ):
     try:
         configuration = api_get_configuration(rpc_context)
@@ -245,7 +245,7 @@ def start_zk_vanguard_task(
     rpc_context: AuditHubContextType,
 ):
     """
-    Start a ZK Vanguard (static analysis) task for a specific version of a project. Outputs the task id.
+    Start a ZK Vanguard v2 (static analysis) task for a specific version of a project. Outputs the task id.
 
     """
     start_vanguard_common(
@@ -257,5 +257,5 @@ def start_zk_vanguard_task(
         input_limit=[input_limit],
         wait=wait,
         rpc_context=rpc_context,
-        tool_name="zk-vanguard",
+        tool_name="zk-vanguard-v2",
     )

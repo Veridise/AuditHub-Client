@@ -54,7 +54,7 @@ class StartVanguardTaskArgs:
     cross_version_triage: Optional[bool]
 
     input_limit: Optional[list[str]]
-    tool_name: Literal["vanguard", "vanguard-v2", "zk-vanguard"]
+    tool_name: Literal["vanguard", "vanguard-v2", "zk-vanguard-v2"]
 
 
 def api_start_vanguard_task(context: AuditHubContext, input: StartVanguardTaskArgs):
