@@ -181,10 +181,14 @@ def start_defi_vanguard_task(
     version_id: VersionIdType,
     name: TaskNameType = None,
     cross_version_triage: CrossVersionTriageType = False,
-    detector: DefiV2DetectorType = [],
-    embedded_custom_detectors: DefiV2CustomDetectorFromVersionType = [],
-    std_lib_custom_detectors: DefiV2CustomDetectorFromStandardLibraryType = [],
-    org_lib_custom_detectors: DefiV2CustomDetectorFromOrganizationLibraryType = [],
+    detector: Optional[DefiV2DetectorType] = None,
+    embedded_custom_detectors: Optional[DefiV2CustomDetectorFromVersionType] = None,
+    std_lib_custom_detectors: Optional[
+        DefiV2CustomDetectorFromStandardLibraryType
+    ] = None,
+    org_lib_custom_detectors: Optional[
+        DefiV2CustomDetectorFromOrganizationLibraryType
+    ] = None,
     input_limit: DefiInputLimitType = None,
     wait: TaskWaitType = False,
     rpc_context: AuditHubContextType,
@@ -193,17 +197,25 @@ def start_defi_vanguard_task(
     Start a DeFi Vanguard V2 (static analysis) task for a specific version of a project. Outputs the task id.
 
     """
+    if detector is None:
+        detector = []
+
     custom_detectors: CustomDetectorsForTask = []
-    for relative_path in embedded_custom_detectors:
-        custom_detectors.append(CustomDetectorFromVersion(relative_path=relative_path))
-    for encoded_custom_detector in std_lib_custom_detectors:
-        custom_detectors.append(
-            decode_std_lib_custom_detector_from_string(encoded_custom_detector)
-        )
-    for custom_detector_id in org_lib_custom_detectors:
-        custom_detectors.append(
-            CustomDetectorFromOrganizationLibrary(id=custom_detector_id)
-        )
+    if embedded_custom_detectors:
+        for relative_path in embedded_custom_detectors:
+            custom_detectors.append(
+                CustomDetectorFromVersion(relative_path=relative_path)
+            )
+    if std_lib_custom_detectors:
+        for encoded_custom_detector in std_lib_custom_detectors:
+            custom_detectors.append(
+                decode_std_lib_custom_detector_from_string(encoded_custom_detector)
+            )
+    if org_lib_custom_detectors:
+        for custom_detector_id in org_lib_custom_detectors:
+            custom_detectors.append(
+                CustomDetectorFromOrganizationLibrary(id=custom_detector_id)
+            )
 
     start_vanguard_common(
         organization_id=organization_id,
