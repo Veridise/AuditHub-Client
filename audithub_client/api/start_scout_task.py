@@ -26,12 +26,6 @@ class StartScoutTaskArgs:
     parameters: ScoutParameters
     name: Optional[str] = None
 
-    def __post_init__(self):
-        if not self.budget.strip():
-            raise ValueError(
-                "Budget must be non-empty. Available values: [Light,Medium,High,Extra Max,Ultra]"
-            )
-
 
 def api_start_scout_task(context: AuditHubContext, input: StartScoutTaskArgs):
     logger.debug("Starting Scout")

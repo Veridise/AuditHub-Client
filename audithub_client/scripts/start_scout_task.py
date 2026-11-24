@@ -4,6 +4,7 @@ from typing import Annotated, Optional
 
 from cyclopts import Parameter
 
+from ..api.get_configuration import api_get_configuration
 from ..api.monitor_task import MonitorTaskArgs, api_monitor_task
 from ..api.start_scout_task import (
     ScoutParameters,
@@ -46,7 +47,7 @@ def start_scout_task(
     Parameters
     ----------
     budget:
-        The name of the budget class to use.
+        The name of the budget class to use. For valid names, run `ah get-configuration ai_budgets`.
 
     input_limit:
         Source files to process, with paths relative to the version root.
@@ -58,6 +59,11 @@ def start_scout_task(
     generate_pocs
     """
     try:
+        configuration = api_get_configuration(rpc_context)
+        supported_budgets = {e["name"] for e in configuration["ai_budgets"]}
+        if budget not in supported_budgets:
+            raise ValueError(f"'{budget}' is not a valid budget name.")
+
         rpc_input = StartScoutTaskArgs(
             organization_id=organization_id,
             project_id=project_id,
