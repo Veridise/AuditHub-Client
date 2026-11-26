@@ -20,7 +20,7 @@ def get_dict_of_fields_except(data_class_object, exceptions: set[str]) -> dict:
 
 
 def instantiate_from_args(data_class: type, args: Namespace):
-    class_fields = set(map(lambda e: e.name, fields(data_class)))
+    class_fields = {e.name for e in fields(data_class)}
     return data_class(**{k: v for (k, v) in vars(args).items() if k in class_fields})
 
 

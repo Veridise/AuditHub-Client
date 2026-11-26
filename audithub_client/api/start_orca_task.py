@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import logging
 from dataclasses import asdict, dataclass
 from typing import Literal, Optional
@@ -128,9 +127,9 @@ def api_start_orca_task(
     data = {
         "name": input.name,
         "parameters": asdict(input.parameters),
-        "specs_override": list([asdict(spec) for spec in input.specs]),
+        "specs_override": [asdict(spec) for spec in input.specs],
         "hints_override": (
-            list([asdict(hint) for hint in input.hints]) if input.hints else None
+            [asdict(hint) for hint in input.hints] if input.hints else None
         ),
         "deployment_script_path_override": input.deployment_script_path_override,
         "on_chain": input.on_chain,

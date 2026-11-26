@@ -57,9 +57,7 @@ def api_monitor_task(context: AuditHubContext, input: MonitorTaskArgs) -> bool:
                     status = task_message["status"]
                     if task_message["finished_at"]:
                         logger.info("Task finished with status: %s", status)
-                        if status == "Succeeded":
-                            return True
-                        return False
+                        return status == "Succeeded"
                     if status == "Running":
                         logger.info("Task started")
                     elif status in {"Pending", "Queued"}:
@@ -107,8 +105,8 @@ def api_monitor_task(context: AuditHubContext, input: MonitorTaskArgs) -> bool:
                     )
                 elif kind == "TaskStepLogMessage":
                     print(f"[{task_message["step_code"]}] {task_message["entry"]}")
-        except ConnectionClosedOK as ex:
-            logger.info("Websocket client: All server logs are received.", ex.reason)
-        except Exception as ex:  # pylint: disable=broad-exception-caught
-            logger.exception(ex)
+        except ConnectionClosedOK:
+            logger.info("Websocket client: All server logs are received.")
+        except Exception:
+            logger.exception("Failed to stream task logs")
     return False

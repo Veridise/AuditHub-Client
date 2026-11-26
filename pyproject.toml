@@ -33,6 +33,15 @@ pre-commit-hooks = "*"
 profile = "black"
 src_paths = ["audithub_client"]
 
+[tool.ruff.lint]
+extend-ignore = [
+    "C408",   # Unnecessary collection constructor call.
+    "PLC0414", # Import alias is identical to the original name.
+    "PLW0602", # Global variable declared without assignment in the function.
+    "SIM117",  # Nested with statements that can be combined into one.
+    "UP045",   # Replace Optional[X] annotations with X | None.
+]
+
 
 [tool.poetry.scripts]
 ah = "audithub_client.__main__:main"

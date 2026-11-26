@@ -59,6 +59,8 @@ def decode_std_lib_custom_detector_from_string(e: str):
 
 
 def validate_std_lib_custom_detector(_t, v):
+    if v is None:
+        return True
     for e in v:
         decode_std_lib_custom_detector_from_string(e)
     return True
@@ -91,7 +93,7 @@ ZKDetectorType = Annotated[
         validator=lambda _t, v: len(v) > 0,
         consume_multiple=True,
         negative_iterable=(),
-        help="One or more detector(s) to use for analyzing the sources. For a list of valid detector names, please run `ah get-configuration vanguard_zk_detectors`.",
+        help="One or more detector(s) to use for analyzing the sources. For a list of valid detector names, please run `ah get-configuration vanguard_v2_zk_detectors`.",
     ),
 ]
 
@@ -107,14 +109,14 @@ ZKInputLimitType = Annotated[
     str,
     Parameter(
         negative_iterable=(),
-        help="A circom source file to process.",
+        help="An LLZK source file to process.",
     ),
 ]
 
 supported_detectors_keys = {
     "vanguard": "vanguard_v2_defi_detectors",
     "vanguard-v2": "vanguard_v2_defi_detectors",
-    "zk-vanguard": "vanguard_zk_detectors",
+    "zk-vanguard-v2": "vanguard_v2_zk_detectors",
 }
 
 
@@ -130,14 +132,14 @@ def start_vanguard_common(
     cross_version_triage: Optional[bool] = None,
     wait: bool = False,
     rpc_context: AuditHubContextType,
-    tool_name: Literal["vanguard", "vanguard-v2", "zk-vanguard"],
+    tool_name: Literal["vanguard", "vanguard-v2", "zk-vanguard-v2"],
 ):
     try:
         configuration = api_get_configuration(rpc_context)
 
-        supported_detectors = set(
-            [e["code"] for e in configuration[supported_detectors_keys[tool_name]]]
-        )
+        supported_detectors = {
+            e["code"] for e in configuration[supported_detectors_keys[tool_name]]
+        }
         for d in detector:
             if d not in supported_detectors:
                 raise ValueError(f"'{d}' is not a valid detector name.")
@@ -181,10 +183,14 @@ def start_defi_vanguard_task(
     version_id: VersionIdType,
     name: TaskNameType = None,
     cross_version_triage: CrossVersionTriageType = False,
-    detector: DefiV2DetectorType = list(),
-    embedded_custom_detectors: DefiV2CustomDetectorFromVersionType = list(),
-    std_lib_custom_detectors: DefiV2CustomDetectorFromStandardLibraryType = list(),
-    org_lib_custom_detectors: DefiV2CustomDetectorFromOrganizationLibraryType = list(),
+    detector: Optional[DefiV2DetectorType] = None,
+    embedded_custom_detectors: Optional[DefiV2CustomDetectorFromVersionType] = None,
+    std_lib_custom_detectors: Optional[
+        DefiV2CustomDetectorFromStandardLibraryType
+    ] = None,
+    org_lib_custom_detectors: Optional[
+        DefiV2CustomDetectorFromOrganizationLibraryType
+    ] = None,
     input_limit: DefiInputLimitType = None,
     wait: TaskWaitType = False,
     rpc_context: AuditHubContextType,
@@ -193,17 +199,25 @@ def start_defi_vanguard_task(
     Start a DeFi Vanguard V2 (static analysis) task for a specific version of a project. Outputs the task id.
 
     """
+    if detector is None:
+        detector = []
+
     custom_detectors: CustomDetectorsForTask = []
-    for relative_path in embedded_custom_detectors:
-        custom_detectors.append(CustomDetectorFromVersion(relative_path=relative_path))
-    for encoded_custom_detector in std_lib_custom_detectors:
-        custom_detectors.append(
-            decode_std_lib_custom_detector_from_string(encoded_custom_detector)
-        )
-    for custom_detector_id in org_lib_custom_detectors:
-        custom_detectors.append(
-            CustomDetectorFromOrganizationLibrary(id=custom_detector_id)
-        )
+    if embedded_custom_detectors:
+        for relative_path in embedded_custom_detectors:
+            custom_detectors.append(
+                CustomDetectorFromVersion(relative_path=relative_path)
+            )
+    if std_lib_custom_detectors:
+        for encoded_custom_detector in std_lib_custom_detectors:
+            custom_detectors.append(
+                decode_std_lib_custom_detector_from_string(encoded_custom_detector)
+            )
+    if org_lib_custom_detectors:
+        for custom_detector_id in org_lib_custom_detectors:
+            custom_detectors.append(
+                CustomDetectorFromOrganizationLibrary(id=custom_detector_id)
+            )
 
     start_vanguard_common(
         organization_id=organization_id,
@@ -233,7 +247,7 @@ def start_zk_vanguard_task(
     rpc_context: AuditHubContextType,
 ):
     """
-    Start a ZK Vanguard (static analysis) task for a specific version of a project. Outputs the task id.
+    Start a ZK Vanguard v2 (static analysis) task for a specific version of a project. Outputs the task id.
 
     """
     start_vanguard_common(
@@ -245,5 +259,5 @@ def start_zk_vanguard_task(
         input_limit=[input_limit],
         wait=wait,
         rpc_context=rpc_context,
-        tool_name="zk-vanguard",
+        tool_name="zk-vanguard-v2",
     )
